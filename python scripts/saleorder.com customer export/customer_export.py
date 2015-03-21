@@ -107,12 +107,17 @@ dbpass='odoo_ajb'
 port=8069
 login_name='programmer@northdown.com.au'
 password='Romeo1'
-database = raw_input('Enter target database:\n 1: Northdown or ajb_live') or 'ajb_live'
+database = raw_input('Enter target database:\n 1: Northdown \n 2: Northdown_staging \n or ajb_live') or 'ajb_live'
 if database == '1':
     database = 'Northdown'
     dbuser='bn_openerp'
     dbpass='SFrule7S'
     port = 80
+elif database == '2':
+    database = 'Northdown_staging'
+    dbuser='bn_openerp'
+    dbpass='SFrule7S'
+    port = 80    
     
     
 print 'server',server
