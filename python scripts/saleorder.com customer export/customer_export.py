@@ -111,12 +111,12 @@ database = raw_input('Enter target database:\n 1: Northdown \n 2: Northdown_stag
 if database == '1':
     database = 'Northdown'
     dbuser='bn_openerp'
-    dbpass='SFrule7S'
+    dbpass='df124428'
     port = 80
 elif database == '2':
     database = 'Northdown_staging'
     dbuser='bn_openerp'
-    dbpass='SFrule7S'
+    dbpass='df124428'
     port = 80    
     
     
