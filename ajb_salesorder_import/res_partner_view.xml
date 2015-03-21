@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+    
+		 <record model="ir.ui.view" id="res_partner_salesorder_form_view">
+                <field name="name">res.partner.form</field>
+                <field name="model">res.partner</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="crm_profiling.view_partner_form"/>
+                <field name="arch" type="xml">
+					<page string="Profiling" groups="base.group_user" position="after">
+						<page string="Others" groups="base.group_user">
+							<group>
+								<field name="salesorder_ref"/>
+								<field name="balance"/>
+								<field name="first_name"/>
+								<field name="last_name"/>
+								<field name="gender"/>
+								<field name="job_title_id"/>
+								<field name="assistant_name"/>
+								<field name="assistant_phone"/>
+								<field name="customer_since_date"/>
+								<field name="login"/>
+								<field name="class_1"/>
+								<field name="class_2"/>
+								<field name="class_3"/>
+							</group>
+						</page>
+					</page>
+					
+					<field name="phone" position="after">
+						<field name="phone2"/>
+					</field>
+
+	
+                </field>
+            </record>    
+    
+    
+    </data>
+</openerp>

@@ -1,0 +1,46 @@
+Target column index,Column name,Disregard?,Reason for disregarding,Odoo res partner field,odoo value,new odoo field
+0,Type,Y,,customer,Y,
+1,Customer Name,,,name,same,
+2,Ref #,,,N/A,,salesorder.com reference
+3,Owner,,,user_id,user id of connected salesperson,
+4,Balance,,,N/A,,balance
+5,Currency,Y,,,,
+7,Title,,,title,id of connected title (res.partner.title),
+8,First Name,,,N/A,,first_name
+9,Last Name,,,N/A,,last_name
+10,Gender,,,N/A,,gender
+11,Address Line 1,,,street,same,
+12,Address Line 2,,,street2,same,
+13,Town/City,,,city,,
+14,County,Y,,,,
+15,State/Province,,,state_id,id connected to state (res.country.state,
+16,Country,,,country_id,id connected to country (res.country),
+17,Post/Zip code,,,zip,,
+18,Map (www link),,,N/A,,see first google maps integration
+19,Contact Type,Y,All entries has 'standard' value,,,
+20,Job Title,,,N/A,,create new object res.partner.job.title
+22,Telephone 1,,,,,
+23,Telephone 1,Y,only existing values will be handled,,,
+24,Telephone 2,,,,,
+25,Telephone 2,Y,only existing values will be handled,,,
+26,Fax,,,fax,same,
+27,Mobile,,,mobile,same,
+28,E-mail,,,email,same,
+29,Website,,,website,same,
+30,Assistant,,,N/A,,assistant_name
+31,Assistant Phone,,,N/A,,assistant_phone
+32,Assistant Phone,Y,just a blank column,,,
+37,Is Active,,,active,,
+38,Customer since,,,N/A,,customer_since_date (value must be generated upon applying the attribute on the res_partner entry)
+40,Enable login,,,N/A,,login
+41,Login ID,,,N/A,,
+42,Password,,,N/A,,
+43,Enable Portal Shopping Cart,,,N/A,,
+47,Terms,,,comment,,
+48,Price Level,,,,,
+49,Price List,,,property_product_pricelist,,
+50,Ship via,,,property_delivery_carrier,,
+54,Payment Processor,Y,No value,,,
+60,Class 1,,,N/A,,Class_1
+61,Class 2,,,N/A,,Class_2
+62,Class 3,,,N/A,,Class_3

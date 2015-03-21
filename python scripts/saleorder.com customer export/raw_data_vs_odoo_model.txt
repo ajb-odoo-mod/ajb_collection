@@ -1,0 +1,42 @@
+Type,customer,call_function
+Customer Name,name
+Ref #,salesorder_ref
+Owner,user_id,call_function
+Currency
+First Name,first_name
+Address Line 1,street
+Town/City,city
+State/Province,state_id,call_function
+Country,country_id,call_function
+Post/Zip code,zip
+Contact Type
+Telephone 1,phone
+E-mail,email
+Is Active,active,call_function
+Customer since,customer_since_date
+Enable login,login
+Login ID
+Password
+Terms,comment
+Price List,property_product_pricelist,call_function
+Ship via,property_delivery_carrier,call_function
+Payment Processor
+Class 1,class_1
+Class 2,class_2
+Class 3,class_3
+Balance,balance
+Address Line 2,street2
+Price Level
+Map (www link)
+Telephone 2,phone2
+Last Name,last_name
+Gender,gender
+Mobile,mobile
+County,country_id,call_function
+Assistant,assistant_name
+Assistant Phone,assistant_phone
+Fax,fax
+Website,website
+Enable Portal Shopping Cart
+Title,title,call_function
+Job Title,job_title_id,call_function

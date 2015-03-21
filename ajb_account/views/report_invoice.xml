@@ -1,0 +1,98 @@
+<openerp>
+   <data>
+      <template id="account.report_invoice_document">
+<!--          <t t-name="account.report_invoice_document"> -->
+            <t t-call="report.external_layout">
+               <div class="page">
+						<div class="row">
+	                  	<table class="table" style="width:100%;">
+	                  	<thead>
+	                  		<tr>
+	                  			<th bgcolor="#D4D4CC" style="text-align:left;width:50%;">Customer</th>
+	                  			<th bgcolor="#D4D4CC" style="text-align:left;width:50%;">Delivery Insturctions</th>
+	                  		</tr>
+	                  		
+	                  	</thead>
+	                  	<tbody>
+	                  		<tr>
+		                        <td>
+		                           <address t-field="o.partner_id"
+		                              t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}' />
+		                        </td>  
+		                        <td>Delivery instruction data</td>                			
+	                  		</tr>
+	                  	</tbody>
+	                  	</table>    
+	                  	</div>
+	                  	
+				<div class="row">
+					<table class="table" style="width:100%;">
+            <tr style="width:100%;">
+                <th bgcolor="#D4D4CC" style="text-align:left; width:20%;">Customer No.</th>
+                <td style="width:30%">data</td>
+                
+                <th bgcolor="#D4D4CC" style="text-align:left; width:20%;">Delivery Type</th>
+                <td style="width:30%">data</td>
+            </tr>
+            <tr>
+                <th bgcolor="#D4D4CC" style="text-align:left; width:20%;">Purchase Order #</th>
+                <td style="width:30%">data</td>
+                
+                <th bgcolor="#D4D4CC" style="text-align:left; width:20%;">Tracking No.</th>
+                <td style="width:30%">data</td>            
+            
+            </tr>
+
+					</table>
+				
+				</div>
+             	
+
+                  <table class="table table-condensed">
+                     <thead>
+                        <tr>
+                           <th>Qty</th>
+                           <th>U/M</th>
+                           <th>Description</th>
+                           <th>Item</th>
+                           <th>Unit Price</th>
+                           <th>Amount</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr t-foreach="o.invoice_line" t-as="l">
+                           <td><span t-field="l.quantity"/></td>
+                           <td><span t-field="l.uos_id"  groups="product.group_uom"/></td>
+                           <td><span t-field="l.name"/></td>
+                           <td><span t-field="l.product_id.name"/></td>
+                           <td><span t-field="l.price_unit"/></td>
+                           <td><span t-field="l.price_subtotal"/></td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <div class="row">
+                        <table class="table" style="width:70%;margin-left:30%;">
+                              <tr>
+	                                 <th bgcolor="#D4D4CC" style="text-align:right;" >Terms</th>
+	                                 <td>data</td>
+				                   	  <th bgcolor="#D4D4CC"  style="text-align:right;" >Tax</th>
+                	                 <td>data</td>
+                              </tr>
+                              <tr>
+                                 <th bgcolor="#D4D4CC"  style="text-align:right;">Due Date</th>
+                                 <td>data</td>
+                                 <th bgcolor="#D4D4CC"  style="text-align:right;">Total</th>
+                                 <td>data</td>
+                              </tr>
+                        </table>
+                     </div>
+                     <div class="col-xs-4 col-xs-pull-8">
+
+                       <p>test</p>
+                     </div>
+                  </div>
+            </t>
+<!--          </t> -->
+      </template>
+   </data>
+</openerp>

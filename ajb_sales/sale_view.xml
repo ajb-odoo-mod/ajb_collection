@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+        <!-- <menuitem id="menu_sale_quotations"
+                action="action_quotations" parent="base.menu_sales"
+                sequence="5"/> -->
+		<!-- Delete Sales > Quotations menu item -->                    
+		<delete model="ir.ui.menu" id="sale.menu_sale_quotations" />
+		<!-- Apply menuitem 'Customer Invoices' to sales > sales -->                    
+        <menuitem action="account.action_invoice_tree1" id="menu_action_invoice_tree1_sale" parent="base.menu_sales"/>
+    
+    </data>
+</openerp>
