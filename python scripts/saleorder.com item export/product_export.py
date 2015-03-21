@@ -34,4 +34,18 @@ for row in reader:
             target_data.append(dict(current_customer_row))
             current_customer_row=[]
 
-print json.dumps(target_data, sort_keys=True, indent=2)
+for y in column_headers:
+# for y in ['Telephone 2']:
+    target_data_type=y
+    data_values=[]
+    for x in target_data:
+        if target_data_type in x:
+            if x[target_data_type] not in data_values:
+                data_values.append(x[target_data_type])
+                
+    print 'target_data_type',target_data_type        
+    print 'data_values',data_values
+
+# print 'column_headers'
+# for x in column_headers: print x
+# print json.dumps(target_data, sort_keys=True, indent=2)
