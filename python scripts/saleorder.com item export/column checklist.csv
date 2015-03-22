@@ -29,7 +29,7 @@ Foreign Cost 2,y,Duplicate,,,,,
 On Hand,,,qty_available,,,,
 On Sales Orders (Allocated),,,,,,qty_allocated,
 Free Stock,,,,,,qty_free,
-Average Cost,,,,,,,need confirmation
+Average Cost,,,,,,average_price,need confirmation
 On Sales Orders (Not Allocated),,,,,,qty_unallocated,need confirmation
 Shortfall,,,,,,shortfall,
 On Purchase Orders,,,incoming_qty,,,,

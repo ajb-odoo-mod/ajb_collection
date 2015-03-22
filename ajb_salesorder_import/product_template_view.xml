@@ -14,6 +14,19 @@
             </field>
          </field>
       </record>
+
+		 <record model="ir.ui.view" id="abj_inherit_product_template1_form_view">
+                <field name="name">product.template.form</field>
+                <field name="model">product.template</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="product.product_template_form_view"/>
+                <field name="arch" type="xml">
+					<field name="standard_price" position="after">
+						<field name="average_price"/>
+					</field>
+                </field>
+            </record>
+      
       <record model="ir.ui.view" id="ajb_inherit_product_template2_form_view">
          <field name="name">product.template.form</field>
          <field name="model">product.template</field>
@@ -56,7 +69,7 @@
                      <field name='minimum_order_value'/>
                      <field name='minimum_order_quantity'/>
                      <field name='drop_shipped'/>
-                     <field name='pack_seperately'/>
+                     <field name='pack_separately'/>
                      <field name='weigh_before_shipping'/>
                      <field name='units_per_box'/>
                      <field name='shipping_notes'/>

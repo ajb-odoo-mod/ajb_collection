@@ -54,6 +54,8 @@ class product_template(osv.Model):
     _inherit="product.template"
     _name="product.template"
     _columns={
+              'average_price':fields.float('Average Cost',digits=(16,2)),
+              
               'category_line_ids':fields.many2many('product.category.line', 'product_category_line_rel','product_id','category_id', 'Product Category'), 
               'item_class_id':fields.many2one('product.item.class', 'Product Class', required=False), 
               'image_ids':fields.one2many('product.images', 'product_id', 'Images', required=False),
@@ -77,13 +79,13 @@ class product_template(osv.Model):
               'shortfall':fields.float('Shortfall',digits=(16,2)),
               'supplier_part_number':fields.char('Supplier Part number/Code'),
               'supplier_description':fields.char('Supplier Description'),
-              'use_on_purchase_document':fields.char('Use on Purchase Documents',size=64),
+              'use_on_purchase_document':fields.boolean('Use on Purchase Documents'),
               'default_order_type':fields.char('Default Order Type',size=64),
               'reorder_level':fields.integer('Re-order Level'),
               'minimum_order_value':fields.float('Minimum Order Value',digits=(16,2)),
               'minimum_order_quantity':fields.integer('Minimum Order Quantity'),
               'drop_shipped':fields.boolean('Item is Drop Shipped'),
-              'pack_seperately':fields.boolean('Pack Separately'),
+              'pack_separately':fields.boolean('Pack Separately'),
               'weigh_before_shipping':fields.boolean('Weigh Before Shipping'),
               'units_per_box':fields.integer('Number of units per box'),
               'shipping_notes':fields.char('Shipping Instructions',size=64),

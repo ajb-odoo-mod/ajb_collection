@@ -45,6 +45,41 @@ for y in column_headers:
                 
     print 'target_data_type',target_data_type        
     print 'data_values',data_values
+    
+function_needed_data="""
+function_needed_data=
+Type,type
+Item is active?,active
+Item is Sold,sale_ok
+Item is Purchased,purchase_ok
+Sales Units,uom_id
+Pays Commission,pay_commission
+Purchase Units,uom_po_id
+Use on Purchase Documents,use_on_purchase_document
+Category 1,category_line_ids
+Category 2,category_line_ids
+Category 3,category_line_ids
+Category 4,category_line_ids
+Attribute 1,attribute_line_ids
+Attribute 2,attribute_line_ids
+Attribute 3,attribute_line_ids
+Attribute 4,attribute_line_ids
+Attribute 5,attribute_line_ids
+Attribute 6,attribute_line_ids
+Item Class,item_class_id
+Image 1,image_ids
+Image 2,image_ids
+Image 3,image_ids
+Image 4,image_ids
+Item is Drop Shipped,drop_shipped
+Pack Separately,pack_seperately
+Weigh Before Shipping,pack_separately
+Dimension Units,volume
+Weight,weight
+Asset,asset_id
+Expense,expense_id
+Available in Portal Cart
+"""
 
 # print 'column_headers'
 # for x in column_headers: print x
