@@ -22,11 +22,51 @@
          <field name="arch" type="xml">
             <xpath expr="//page[@string='Warnings']" position="after">
                <page name="other" string="Other Information">
+                   <field name="image_ids" nolabel="1"/>
+               
+               	<group>
                   <group>
                      <field name="item_class_id"/>
                      <field name="expense_id"/>
-                     <field name="image_ids"/>
+                     <field name="asset_id"/>
+                     <field name='sales_single_line_print'/>
+                     <field name='purchasing_single_line_print'/>
+                     <field name='matrix_parent'/>
+                     <field name='matrix_ok'/>
+                     <field name='commodity_code'/>
+                     <field name='amount_percentage'/>
+                     <field name='foreign_price1'/>
+                     <field name='foreign_price2'/>
+                     <field name='pay_commission'/>
+                     <field name='foreign_cost1'/>
+                     <field name='foreign_cost2'/>
+                     <field name='qty_allocated'/>
+                     <field name='cart_mapping'/>
+                     <field name='price_impact'/>                     
                   </group>
+                  <group>
+                     <field name='qty_free'/>
+                     <field name='qty_unallocated'/>
+                     <field name='shortfall'/>
+                     <field name='supplier_part_number'/>
+                     <field name='supplier_description'/>
+                     <field name='use_on_purchase_document'/>
+                     <field name='default_order_type'/>
+                     <field name='reorder_level'/>
+                     <field name='minimum_order_value'/>
+                     <field name='minimum_order_quantity'/>
+                     <field name='drop_shipped'/>
+                     <field name='pack_seperately'/>
+                     <field name='weigh_before_shipping'/>
+                     <field name='units_per_box'/>
+                     <field name='shipping_notes'/>
+                     <field name='revenue'/>
+                     <field name='portal_cart'/>
+
+                  </group>
+                  
+                  </group>
+                  
                </page>
             </xpath>
          </field>

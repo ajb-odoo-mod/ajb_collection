@@ -54,3 +54,16 @@ access_res_partner_job_title_erp_manager,res.partner.job.title.erp.manager,model
  access_product_express_stock_manager,product.express stock_manager,model_product_expense,stock.group_stock_manager,1,1,1,1 
  access_event_product_express_public,event.product.express.public,model_product_expense,base.group_public,1,0,0,0
  access_product_express_public,product.express.public,model_product_expense,,1,0,0,0 
+ access_product_asset_hr_expense_user,product.asset.hr.expense.user,model_product_expense,base.group_hr_user,1,1,1,1  
+ access_product_asset_pos_user,product.asset pos user,model_product_expense,point_of_sale.group_pos_user,1,0,0,0  
+ access_product_asset_pos_manager,product.asset pos manager,model_product_expense,point_of_sale.group_pos_manager,1,1,1,1  
+ access_product_asset_user,product.asset.user,model_product_expense,base.group_user,1,0,0,0  
+ access_product_asset_sale_manager,product.asset salemanager,model_product_expense,base.group_sale_manager,1,1,1,1  
+ access_product_asset_purchase_user,product.asset purchase_user,model_product_expense,purchase.group_purchase_user,1,0,0,0  
+ access_product_asset_purchase_manager,product.asset purchase_manager,model_product_expense,purchase.group_purchase_manager,1,0,0,0  
+ access_product_asset_purchase_manager,product.asset purchase_manager,model_product_expense,purchase.group_purchase_manager,1,1,1,1  
+ access_product_asset_sale_user,product.asset sale use,model_product_expense,base.group_sale_salesman,1,0,0,0  
+ access_product_asset_stock_user,product.asset stock user,model_product_expense,stock.group_stock_user,1,1,0,0 
+ access_product_asset_stock_manager,product.asset stock_manager,model_product_expense,stock.group_stock_manager,1,1,1,1 
+ access_event_product_asset_public,event.product.asset.public,model_product_expense,base.group_public,1,0,0,0
+ access_product_asset_public,product.asset.public,model_product_expense,,1,0,0,0
