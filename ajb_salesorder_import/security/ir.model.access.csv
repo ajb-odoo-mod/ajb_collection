@@ -1,3 +1,56 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_res_partner_job_title_all,res.partner.job.title.all,model_res_partner_job_title,,1,0,0,0
 access_res_partner_job_title_erp_manager,res.partner.job.title.erp.manager,model_res_partner_job_title,base.group_erp_manager,1,1,1,1
+
+ access_product_category_line_hr_expense_user,product.category.line.hr.expense.user,model_product_category_line,base.group_hr_user,1,1,1,1  
+ access_product_category_line_pos_user,product.category.line pos user,model_product_category_line,point_of_sale.group_pos_user,1,0,0,0  
+ access_product_category_line_pos_manager,product.category.line pos manager,model_product_category_line,point_of_sale.group_pos_manager,1,1,1,1  
+ access_product_category_line_user,product.category.line.user,model_product_category_line,base.group_user,1,0,0,0  
+ access_product_category_line_sale_manager,product.category.line salemanager,model_product_category_line,base.group_sale_manager,1,1,1,1  
+ access_product_category_line_purchase_user,product.category.line purchase_user,model_product_category_line,purchase.group_purchase_user,1,0,0,0  
+ access_product_category_line_purchase_manager,product.category.line purchase_manager,model_product_category_line,purchase.group_purchase_manager,1,0,0,0  
+ access_product_category_line_purchase_manager,product.category.line purchase_manager,model_product_category_line,purchase.group_purchase_manager,1,1,1,1  
+ access_product_category_line_sale_user,product.category.line sale use,model_product_category_line,base.group_sale_salesman,1,0,0,0  
+ access_product_category_line_stock_user,product.category.line stock user,model_product_category_line,stock.group_stock_user,1,1,0,0 
+ access_product_category_line_stock_manager,product.category.line stock_manager,model_product_category_line,stock.group_stock_manager,1,1,1,1 
+ access_event_product_category_line_public,event.product.category.line.public,model_product_category_line,base.group_public,1,0,0,0
+ access_product_category_line_public,product.category.line.public,model_product_category_line,,1,0,0,0 
+ access_product_item_class_hr_expense_user,product.item.class.hr.expense.user,model_product_item_class,base.group_hr_user,1,1,1,1  
+ access_product_item_class_pos_user,product.item.class pos user,model_product_item_class,point_of_sale.group_pos_user,1,0,0,0  
+ access_product_item_class_pos_manager,product.item.class pos manager,model_product_item_class,point_of_sale.group_pos_manager,1,1,1,1  
+ access_product_item_class_user,product.item.class.user,model_product_item_class,base.group_user,1,0,0,0  
+ access_product_item_class_sale_manager,product.item.class salemanager,model_product_item_class,base.group_sale_manager,1,1,1,1  
+ access_product_item_class_purchase_user,product.item.class purchase_user,model_product_item_class,purchase.group_purchase_user,1,0,0,0  
+ access_product_item_class_purchase_manager,product.item.class purchase_manager,model_product_item_class,purchase.group_purchase_manager,1,0,0,0  
+ access_product_item_class_purchase_manager,product.item.class purchase_manager,model_product_item_class,purchase.group_purchase_manager,1,1,1,1  
+ access_product_item_class_sale_user,product.item.class sale use,model_product_item_class,base.group_sale_salesman,1,0,0,0  
+ access_product_item_class_stock_user,product.item.class stock user,model_product_item_class,stock.group_stock_user,1,1,0,0 
+ access_product_item_class_stock_manager,product.item.class stock_manager,model_product_item_class,stock.group_stock_manager,1,1,1,1 
+ access_event_product_item_class_public,event.product.item.class.public,model_product_item_class,base.group_public,1,0,0,0
+ access_product_item_class_public,product.item.class.public,model_product_item_class,,1,0,0,0 
+ access_product_images_hr_expense_user,product.images.hr.expense.user,model_product_images,base.group_hr_user,1,1,1,1  
+ access_product_images_pos_user,product.images pos user,model_product_images,point_of_sale.group_pos_user,1,0,0,0  
+ access_product_images_pos_manager,product.images pos manager,model_product_images,point_of_sale.group_pos_manager,1,1,1,1  
+ access_product_images_user,product.images.user,model_product_images,base.group_user,1,0,0,0  
+ access_product_images_sale_manager,product.images salemanager,model_product_images,base.group_sale_manager,1,1,1,1  
+ access_product_images_purchase_user,product.images purchase_user,model_product_images,purchase.group_purchase_user,1,0,0,0  
+ access_product_images_purchase_manager,product.images purchase_manager,model_product_images,purchase.group_purchase_manager,1,0,0,0  
+ access_product_images_purchase_manager,product.images purchase_manager,model_product_images,purchase.group_purchase_manager,1,1,1,1  
+ access_product_images_sale_user,product.images sale use,model_product_images,base.group_sale_salesman,1,0,0,0  
+ access_product_images_stock_user,product.images stock user,model_product_images,stock.group_stock_user,1,1,0,0 
+ access_product_images_stock_manager,product.images stock_manager,model_product_images,stock.group_stock_manager,1,1,1,1 
+ access_event_product_images_public,event.product.images.public,model_product_images,base.group_public,1,0,0,0
+ access_product_images_public,product.images.public,model_product_images,,1,0,0,0 
+ access_product_express_hr_expense_user,product.express.hr.expense.user,model_product_expense,base.group_hr_user,1,1,1,1  
+ access_product_express_pos_user,product.express pos user,model_product_expense,point_of_sale.group_pos_user,1,0,0,0  
+ access_product_express_pos_manager,product.express pos manager,model_product_expense,point_of_sale.group_pos_manager,1,1,1,1  
+ access_product_express_user,product.express.user,model_product_expense,base.group_user,1,0,0,0  
+ access_product_express_sale_manager,product.express salemanager,model_product_expense,base.group_sale_manager,1,1,1,1  
+ access_product_express_purchase_user,product.express purchase_user,model_product_expense,purchase.group_purchase_user,1,0,0,0  
+ access_product_express_purchase_manager,product.express purchase_manager,model_product_expense,purchase.group_purchase_manager,1,0,0,0  
+ access_product_express_purchase_manager,product.express purchase_manager,model_product_expense,purchase.group_purchase_manager,1,1,1,1  
+ access_product_express_sale_user,product.express sale use,model_product_expense,base.group_sale_salesman,1,0,0,0  
+ access_product_express_stock_user,product.express stock user,model_product_expense,stock.group_stock_user,1,1,0,0 
+ access_product_express_stock_manager,product.express stock_manager,model_product_expense,stock.group_stock_manager,1,1,1,1 
+ access_event_product_express_public,event.product.express.public,model_product_expense,base.group_public,1,0,0,0
+ access_product_express_public,product.express.public,model_product_expense,,1,0,0,0 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+   <data>
+      <record model="ir.ui.view" id="ajb_inherit_product_template_form_view">
+         <field name="name">product.template.form</field>
+         <field name="model">product.template</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="product.product_template_only_form_view"/>
+         <field name="arch" type="xml">
+            <field name="attribute_line_ids" position="after">
+               <group>
+                  <field name="category_line_ids" widget="one2many_list" nolabel="1"/>
+               </group>
+            </field>
+         </field>
+      </record>
+      <record model="ir.ui.view" id="ajb_inherit_product_template2_form_view">
+         <field name="name">product.template.form</field>
+         <field name="model">product.template</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="warning.product_warning_form_view"/>
+         <field name="arch" type="xml">
+            <xpath expr="//page[@string='Warnings']" position="after">
+               <page name="other" string="Other Information">
+                  <group>
+                     <field name="item_class_id"/>
+                     <field name="expense_id"/>
+                     <field name="image_ids"/>
+                  </group>
+               </page>
+            </xpath>
+         </field>
+      </record>
+   </data>
+</openerp>
