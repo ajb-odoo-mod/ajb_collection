@@ -14,6 +14,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>. 
 #######################################################################
 import csv,json
+import oerplib,psycopg2
 #load file 
 csv_file = open('Items.csv','r')
 reader = csv.reader(csv_file)
@@ -45,9 +46,45 @@ for y in column_headers:
                 
     print 'target_data_type',target_data_type        
     print 'data_values',data_values
+
+server = raw_input('Enter server:\n 1: http://188.165.45.213 or localhost') or 'localhost'
+if server == '1':
+    server = 'cgsyd01.carnacgroup.com'
+dbuser='odoo_ajb'
+dbpass='odoo_ajb'
+port=8069
+login_name='programmer@northdown.com.au'
+password='Romeo1'
+database = raw_input('Enter target database:\n 1: Northdown \n 2: Northdown_staging \n or ajb_live') or 'ajb_live'
+if database == '1':
+    database = 'Northdown'
+    dbuser='bn_openerp'
+    dbpass='df124428'
+    port = 80
+elif database == '2':
+    database = 'Northdown_staging'
+    dbuser='bn_openerp'
+    dbpass='df124428'
+    port = 80    
     
-simple_data_export=
-{'Sales Description': 'description_sale',
+    
+print 'server',server
+print 'database',database
+print 'port',port
+print 'dbuser',dbuser
+print 'dbpass',dbpass
+oerp = oerplib.OERP(server=server, database=database, protocol='xmlrpc', port=port) 
+conn = psycopg2.connect("host=%s dbname=%s user=%s password=%s" % (server,database,dbuser,dbpass) )
+
+cr = conn.cursor() 
+print 'login_name',login_name
+print 'password',password
+user = oerp.login(user=login_name, passwd=password)
+uid = user.id
+pool = oerp.get    
+    
+simple_data_export={
+'Sales Description': 'description_sale',
  'Foreign Cost 1': 'foreign_cost1',
  'Revenue/Income': 'revenue',
  'Foreign Cost 2': 'foreign_cost2',
@@ -75,7 +112,6 @@ simple_data_export=
  'Supplier Description': 'supplier_description',
  'On Sales Orders (Not Allocated)': 'qty_unallocated',
  'Item Code': 'default_code',
- 'Is Matrix': 'matrix_ok',
  'Default Order Type': 'default_order_type',
  'Average Cost': 'average_price',
  'Shipping Instructions': 'shipping_notes',
@@ -84,20 +120,33 @@ simple_data_export=
  'On Sales Orders (Allocated)': 'qty_allocated'}
 
 
+boolean_data=[
+ "Item is active?", 
+ "Item is Sold", 
+ "Item is Purchased", 
+ "Is Matrix", 
+ "Pays Commission", 
+ "Use on Purchase Documents", 
+ "Item is Drop Shipped", 
+ "Pack Separately", 
+ "Weigh Before Shipping", 
+ "Available in Portal Cart"
+]
+
 
     
 function_needed_data={
-'Item is Drop Shipped': 'drop_shipped', 
+'Item is Drop Shipped': 'drop_shipped', #boolean
  'Category 2': 'category_line_ids', 
  'Category 3': 'category_line_ids', 
  'Category 1': 'category_line_ids', 
  'Asset': 'asset_id', 
  'Category 4': 'category_line_ids', 
- 'Item is Sold': 'sale_ok', 
+ 'Item is Sold': 'sale_ok', #boolean
  'Type': 'type', 
- 'Item is Purchased': 'purchase_ok', 
- 'Pays Commission': 'pay_commission', 
- 'Weigh Before Shipping': 'pack_separately', 
+ 'Item is Purchased': 'purchase_ok',#boolean 
+ 'Pays Commission': 'pay_commission', #boolean
+ 'Weigh Before Shipping': 'pack_separately', #boolean
  'Attribute 3': 'attribute_line_ids', 
  'Attribute 2': 'attribute_line_ids', 
  'Attribute 1': 'attribute_line_ids', 
@@ -107,17 +156,18 @@ function_needed_data={
  'Dimension Units': 'volume', 
  'Purchase Units': 'uom_po_id', 
  'Item Class': 'item_class_id', 
- 'Item is active?': 'active', 
+ 'Item is active?': 'active', #boolean
  'Expense': 'expense_id', 
- 'Available in Portal Cart': 'portal_cart', 
+ 'Available in Portal Cart': 'portal_cart', #boolean
  'Weight': 'weight', 
- 'Pack Separately': 'pack_seperately', 
+ 'Pack Separately': 'pack_seperately', #boolean
  'Sales Units': 'uom_id', 
  'Image 1': 'image_ids', 
  'Image 2': 'image_ids', 
  'Image 3': 'image_ids', 
  'Image 4': 'image_ids', 
- 'Use on Purchase Documents': 'use_on_purchase_document'
+ 'Is Matrix': 'matrix_ok',#boolean 
+ 'Use on Purchase Documents': 'use_on_purchase_document'#boolean
  }
 
 
@@ -128,10 +178,47 @@ function_needed_data={
 #value orm write organizer
 for data_count,datum in enumerate(target_data):
     orm_write_data={}
+    category_line_ids=[]
 #     print 'datum',datum
     #HANDLES SIMPLE DATA EXPORT
     for datum_data_type in datum:
         if datum_data_type in simple_data_export:
-            orm_write_data[simple_data_export[datum_data_type]]=datum[datum_data_type]
+            if datum[datum_data_type] and datum[datum_data_type] not in ['None','0','0.00']:
+                orm_write_data[simple_data_export[datum_data_type]]=datum[datum_data_type]
 
-    #HANDLES DATA REQUIRING FUNCTIONS        
+    #HANDLES DATA REQUIRING FUNCTIONS   
+        #handles boolean data
+        if datum_data_type in boolean_data:
+            if datum[datum_data_type] == 'Y':
+                orm_write_data[function_needed_data[datum_data_type]]=1
+        elif datum_data_type in ['Category 1', 'Category 2', 'Category 3', 'Category 4']:
+            #category_line_ids
+            #product.category.line
+            #name
+            #type
+            target_type=datum_data_type.split(' ')[1]
+            target_name=datum[datum_data_type]
+            category_data={'name':target_name,'type':target_type}
+            target_category_id=pool('product.category.line').search([('name','=',target_name),('type','=',target_type)])
+            if not target_category_id:
+                target_category_id = pool('product.category.line').create(category_data)
+            if isinstance(target_category_id,list):
+                category_line_ids.extend(target_category_id)
+            else:
+                category_line_ids.append(target_category_id)
+        elif datum_data_type == 'Asset':
+            asset_data={'name':datum[datum_data_type]}
+            target_asset_id=pool('product.asset').search([('name','=',datum[datum_data_type])])
+            if not target_asset_id:
+                target_asset_id=pool('product.asset').create(asset_data)
+            if isinstance(target_asset_id,list):
+                orm_write_data[function_needed_data[datum_data_type]]=target_asset_id[0]
+            else:
+                orm_write_data[function_needed_data[datum_data_type]]=target_asset_id
+            
+        elif datum_data_type=='Type':
+            if datum[datum_data_type]=='Stock Item':
+                orm_write_data[function_needed_data[datum_data_type]]='product'
+    if category_line_ids:
+        orm_write_data['category_line_ids']=[6,0,category_line_ids]
+    print 'orm_write_data',orm_write_data
