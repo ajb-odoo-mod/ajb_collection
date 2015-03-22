@@ -46,41 +46,92 @@ for y in column_headers:
     print 'target_data_type',target_data_type        
     print 'data_values',data_values
     
-function_needed_data="""
-function_needed_data=
-Type,type
-Item is active?,active
-Item is Sold,sale_ok
-Item is Purchased,purchase_ok
-Sales Units,uom_id
-Pays Commission,pay_commission
-Purchase Units,uom_po_id
-Use on Purchase Documents,use_on_purchase_document
-Category 1,category_line_ids
-Category 2,category_line_ids
-Category 3,category_line_ids
-Category 4,category_line_ids
-Attribute 1,attribute_line_ids
-Attribute 2,attribute_line_ids
-Attribute 3,attribute_line_ids
-Attribute 4,attribute_line_ids
-Attribute 5,attribute_line_ids
-Attribute 6,attribute_line_ids
-Item Class,item_class_id
-Image 1,image_ids
-Image 2,image_ids
-Image 3,image_ids
-Image 4,image_ids
-Item is Drop Shipped,drop_shipped
-Pack Separately,pack_seperately
-Weigh Before Shipping,pack_separately
-Dimension Units,volume
-Weight,weight
-Asset,asset_id
-Expense,expense_id
-Available in Portal Cart
-"""
+simple_data_export=
+{'Sales Description': 'description_sale',
+ 'Foreign Cost 1': 'foreign_cost1',
+ 'Revenue/Income': 'revenue',
+ 'Foreign Cost 2': 'foreign_cost2',
+ 'Commodity code': 'commodity_code',
+ 'Unit Cost': 'standard_price',
+ 'Unit Price': 'list_price',
+ 'Number of units per box': 'units_per_box',
+ 'Price Impact': 'price_impact',
+ 'Minimum Order Quantity': 'minimum_order_quantity',
+ 'Supplier Part number/Code': 'supplier_part_number',
+ 'Barcode': 'ean13',
+ 'Print as single line (sales)': 'sales_single_line_print',
+ 'Re-order level': 'reorder_level',
+#  'Serial Number': 'ean13?',
+ 'Shortfall': 'shortfall',
+ 'Amounts as percentage': 'amount_percentage',
+ 'Matrix Parent': 'matrix_parent',
+ 'On Purchase Orders': 'incoming_qty',
+ 'Average Lead Time': 'sale_delay',
+ 'Foreign Price 1': 'foreign_price1',
+ 'Foreign Price 2': 'foreign_price2',
+ 'Print as single line (purchasing)': 'purchasing_single_line_print',
+ 'Cart Mapping': 'cart_mapping',
+ 'Minimum Order Value': 'minimum_order_value',
+ 'Supplier Description': 'supplier_description',
+ 'On Sales Orders (Not Allocated)': 'qty_unallocated',
+ 'Item Code': 'default_code',
+ 'Is Matrix': 'matrix_ok',
+ 'Default Order Type': 'default_order_type',
+ 'Average Cost': 'average_price',
+ 'Shipping Instructions': 'shipping_notes',
+ 'Free Stock': 'qty_free',
+ 'On Hand': 'qty_available',
+ 'On Sales Orders (Allocated)': 'qty_allocated'}
+
+
+
+    
+function_needed_data={
+'Item is Drop Shipped': 'drop_shipped', 
+ 'Category 2': 'category_line_ids', 
+ 'Category 3': 'category_line_ids', 
+ 'Category 1': 'category_line_ids', 
+ 'Asset': 'asset_id', 
+ 'Category 4': 'category_line_ids', 
+ 'Item is Sold': 'sale_ok', 
+ 'Type': 'type', 
+ 'Item is Purchased': 'purchase_ok', 
+ 'Pays Commission': 'pay_commission', 
+ 'Weigh Before Shipping': 'pack_separately', 
+ 'Attribute 3': 'attribute_line_ids', 
+ 'Attribute 2': 'attribute_line_ids', 
+ 'Attribute 1': 'attribute_line_ids', 
+ 'Attribute 6': 'attribute_line_ids', 
+ 'Attribute 5': 'attribute_line_ids', 
+ 'Attribute 4': 'attribute_line_ids', 
+ 'Dimension Units': 'volume', 
+ 'Purchase Units': 'uom_po_id', 
+ 'Item Class': 'item_class_id', 
+ 'Item is active?': 'active', 
+ 'Expense': 'expense_id', 
+ 'Available in Portal Cart': 'portal_cart', 
+ 'Weight': 'weight', 
+ 'Pack Separately': 'pack_seperately', 
+ 'Sales Units': 'uom_id', 
+ 'Image 1': 'image_ids', 
+ 'Image 2': 'image_ids', 
+ 'Image 3': 'image_ids', 
+ 'Image 4': 'image_ids', 
+ 'Use on Purchase Documents': 'use_on_purchase_document'
+ }
+
 
 # print 'column_headers'
 # for x in column_headers: print x
 # print json.dumps(target_data, sort_keys=True, indent=2)
+
+#value orm write organizer
+for data_count,datum in enumerate(target_data):
+    orm_write_data={}
+#     print 'datum',datum
+    #HANDLES SIMPLE DATA EXPORT
+    for datum_data_type in datum:
+        if datum_data_type in simple_data_export:
+            orm_write_data[simple_data_export[datum_data_type]]=datum[datum_data_type]
+
+    #HANDLES DATA REQUIRING FUNCTIONS        
