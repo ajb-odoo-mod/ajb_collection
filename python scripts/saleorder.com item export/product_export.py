@@ -179,6 +179,7 @@ function_needed_data={
 for data_count,datum in enumerate(target_data):
     orm_write_data={}
     category_line_ids=[]
+    attribute_line_ids=[]
 #     print 'datum',datum
     #HANDLES SIMPLE DATA EXPORT
     for datum_data_type in datum:
@@ -206,6 +207,7 @@ for data_count,datum in enumerate(target_data):
                 category_line_ids.extend(target_category_id)
             else:
                 category_line_ids.append(target_category_id)
+                
         elif datum_data_type == 'Asset':
             asset_data={'name':datum[datum_data_type]}
             target_asset_id=pool('product.asset').search([('name','=',datum[datum_data_type])])
@@ -219,6 +221,34 @@ for data_count,datum in enumerate(target_data):
         elif datum_data_type=='Type':
             if datum[datum_data_type]=='Stock Item':
                 orm_write_data[function_needed_data[datum_data_type]]='product'
+                
+        elif datum_data_type in ['Attribute 1', 'Attribute 2', 'Attribute 3', 'Attribute 4']:
+
+
+            #attribute_line_ids
+            #product.attribute.line
+            #name
+            #type
+            target_type=datum_data_type.split(' ')[1]
+            target_name=datum[datum_data_type]
+            attribute_data={'name':target_name,'type':'select'}
+            target_attribute_id=pool('product.attribute').search([('name','=',target_name),('type','=',target_type)])
+            if not target_attribute_id:
+                target_attribute_id = pool('product.attribute').create(attribute_data)
+            if isinstance(target_attribute_id,list):
+                attribute_line_ids.extend(target_attribute_id)
+            else:
+                attribute_line_ids.append(target_attribute_id)
+                
+        elif datum_data_type == 'Dimension Units':
+            target_dimension_unit = datum[datum_data_type].lower()
+            target_width = int(datum['Width'])
+            target_height = int(datum['Height'])
+            target_length = int(datum['Length'])
+            orm_write_data[function_needed_data[datum_data_type]]=target_width*target_height*target_length*0.01
+            
+    if attribute_line_ids:
+        orm_write_data['attribute_line_ids']=[(6,0,attribute_line_ids)]
     if category_line_ids:
-        orm_write_data['category_line_ids']=[6,0,category_line_ids]
+        orm_write_data['category_line_ids']=[(6,0,category_line_ids)]
     print 'orm_write_data',orm_write_data
