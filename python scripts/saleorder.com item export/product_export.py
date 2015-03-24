@@ -115,7 +115,6 @@ simple_data_export={
  'Default Order Type': 'default_order_type',
  'Average Cost': 'average_price',
  'Shipping Instructions': 'shipping_notes',
- 'Free Stock': 'qty_free',
  'On Hand': 'qty_available',
  'On Sales Orders (Allocated)': 'qty_allocated'}
 
@@ -167,7 +166,9 @@ function_needed_data={
  'Image 3': 'image_ids', 
  'Image 4': 'image_ids', 
  'Is Matrix': 'matrix_ok',#boolean 
- 'Use on Purchase Documents': 'use_on_purchase_document'#boolean
+ 'Use on Purchase Documents': 'use_on_purchase_document',#boolean
+  'Free Stock': 'qty_free',
+
  }
 
 
@@ -185,11 +186,13 @@ for data_count,datum in enumerate(target_data):
     #HANDLES SIMPLE DATA EXPORT
     for datum_data_type in datum:
         if datum_data_type in simple_data_export:
-            if datum[datum_data_type] and datum[datum_data_type] not in ['None','0','0.00']:
+            if datum[datum_data_type] and datum[datum_data_type] not in ['None','0','0.00','NZD']:
                 orm_write_data[simple_data_export[datum_data_type]]=datum[datum_data_type]
 
     #HANDLES DATA REQUIRING FUNCTIONS   
         #handles boolean data
+        if datum_data_type == 'Sales Description':
+            orm_write_data['name']=datum[datum_data_type]
         if datum_data_type in boolean_data:
             if datum[datum_data_type] == 'Y':
                 orm_write_data[function_needed_data[datum_data_type]]=1
@@ -200,14 +203,15 @@ for data_count,datum in enumerate(target_data):
             #type
             target_type=datum_data_type.split(' ')[1]
             target_name=datum[datum_data_type]
-            category_data={'name':target_name,'type':target_type}
-            target_category_id=pool('product.category.line').search([('name','=',target_name),('type','=',target_type)])
-            if not target_category_id:
-                target_category_id = pool('product.category.line').create(category_data)
-            if isinstance(target_category_id,list):
-                category_line_ids.extend(target_category_id)
-            else:
-                category_line_ids.append(target_category_id)
+            if target_name!='None':
+                category_data={'name':target_name,'type':target_type}
+                target_category_id=pool('product.category.line').search([('name','=',target_name),('type','=',target_type)])
+                if not target_category_id:
+                    target_category_id = pool('product.category.line').create(category_data)
+                if isinstance(target_category_id,list):
+                    category_line_ids.extend(target_category_id)
+                else:
+                    category_line_ids.append(target_category_id)
                 
         elif datum_data_type == 'Asset':
             asset_data={'name':datum[datum_data_type]}
@@ -232,14 +236,15 @@ for data_count,datum in enumerate(target_data):
             #type
             target_type=datum_data_type.split(' ')[1]
             target_name=datum[datum_data_type]
-            attribute_data={'name':target_name,'type':'select'}
-            target_attribute_id=pool('product.attribute').search([('name','=',target_name),('type','=',target_type)])
-            if not target_attribute_id:
-                target_attribute_id = pool('product.attribute').create(attribute_data)
-            if isinstance(target_attribute_id,list):
-                attribute_line_ids.extend(target_attribute_id)
-            else:
-                attribute_line_ids.append(target_attribute_id)
+            if target_name != 'None':
+                attribute_data={'name':target_name,'type':'select'}
+                target_attribute_id=pool('product.attribute').search([('name','=',target_name),('type','=',target_type)])
+                if not target_attribute_id:
+                    target_attribute_id = pool('product.attribute').create(attribute_data)
+                if isinstance(target_attribute_id,list):
+                    attribute_line_ids.extend(target_attribute_id)
+                else:
+                    attribute_line_ids.append(target_attribute_id)
                 
         elif datum_data_type == 'Dimension Units':
             target_dimension_unit = datum[datum_data_type].lower()
@@ -251,26 +256,33 @@ for data_count,datum in enumerate(target_data):
         elif datum_data_type in ['Purchase Units','Sales Units']:
             uom_default_data=pool('product.uom').default_get(['uom_type','rounding'])
             target_uom_categ_id = pool('product.uom.categ').search([('name','=','Unit')])[0]
-            target_uom_id=pool('product.uom').search([('name','=',datum[datum_data_type]),('category_id','=',target_uom_categ_id)])[0]
+            target_uom_id=pool('product.uom').search([('name','=',datum[datum_data_type]),('category_id','=',target_uom_categ_id)])
             if not target_uom_id:
                 uom_default_data['name']=datum[datum_data_type]
                 uom_default_data['category_id']=target_uom_categ_id
-                print 'uom_default_data',uom_default_data
                 target_uom_id= pool('product.uom').create(uom_default_data)
-                print 'target_uom_id',target_uom_id
-            orm_write_data[function_needed_data[datum_data_type]]=target_uom_id
+            if isinstance(target_uom_id, list):
+                orm_write_data[function_needed_data[datum_data_type]]=target_uom_id[0]
+            else:
+                orm_write_data[function_needed_data[datum_data_type]]=target_uom_id
             
         elif datum_data_type == 'Item Class':
             target_item_class_id=pool('product.item.class').search([('name','=',datum[datum_data_type])])
             if not target_item_class_id:
                 target_item_class_id= pool('product.item.class').create({'name':datum[datum_data_type]})
-            orm_write_data[function_needed_data[datum_data_type]]=target_item_class_id     
+            if isinstance(target_item_class_id,list):
+                orm_write_data[function_needed_data[datum_data_type]]=target_item_class_id[0]
+            else:
+                orm_write_data[function_needed_data[datum_data_type]]=target_item_class_id     
             
         elif datum_data_type == 'Expense':
             target_expense_id=pool('product.expense').search([('name','=',datum[datum_data_type])])
             if not target_expense_id:
                 target_expense_id= pool('product.expense').create({'name':datum[datum_data_type]})
-            orm_write_data[function_needed_data[datum_data_type]]=target_expense_id      
+            if isinstance(target_expense_id,list):
+                orm_write_data[function_needed_data[datum_data_type]]=target_expense_id[0]
+            else:
+                orm_write_data[function_needed_data[datum_data_type]]=target_expense_id      
             
         elif datum_data_type == 'Weight Units':
              if datum[datum_data_type].lower()=='kg':
@@ -285,13 +297,16 @@ for data_count,datum in enumerate(target_data):
 
             target_priority=datum_data_type.split(' ')[1]
             target_image=datum[datum_data_type]
-            image_data={'image':target_name,'priority':target_priority}
-            target_image_id=pool('product.images').search([('image','=',target_image),('priority','=',target_priority)])
-            if not target_image_id:
-                image_ids.append(image_data)
-            else:
-                image_ids.extend(target_image_id)  
-            print 'image_ids',image_ids      
+            if target_image != 'None':
+                image_data={'image':target_name,'priority':target_priority}
+                target_image_id=pool('product.images').search([('image','=',target_image),('priority','=',target_priority)])
+                if not target_image_id:
+                    image_ids.append(image_data)
+                else:
+                    image_ids.extend(target_image_id)  
+                    
+        elif datum_data_type == 'Free Stock':
+            orm_write_data[function_needed_data[datum_data_type]]=round(float(datum[datum_data_type]))
             
             
     if image_ids:
@@ -304,8 +319,12 @@ for data_count,datum in enumerate(target_data):
         
             
     if attribute_line_ids:
-        orm_write_data['attribute_line_ids']=[(6,0,attribute_line_ids)]
+#         orm_write_data['attribute_line_ids']=[(6,0,attribute_line_ids)]
+        orm_write_data['attribute_line_ids']=[(0,0,{'attribute_id':x}) for x in attribute_line_ids]
     if category_line_ids:
         orm_write_data['category_line_ids']=[(6,0,category_line_ids)]
-#     print 'orm_write_data',orm_write_data
-print 'end'
+
+    if orm_write_data:
+         print 'orm_write_data','%s out of %s' % (data_count+1,len(target_data)), orm_write_data
+         if not pool('product.product').search([('name','=',orm_write_data['name'])]):
+             pool('product.product').create(orm_write_data)    
