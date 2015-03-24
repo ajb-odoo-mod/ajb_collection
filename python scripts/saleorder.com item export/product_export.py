@@ -180,6 +180,7 @@ for data_count,datum in enumerate(target_data):
     orm_write_data={}
     category_line_ids=[]
     attribute_line_ids=[]
+    image_ids=[]
 #     print 'datum',datum
     #HANDLES SIMPLE DATA EXPORT
     for datum_data_type in datum:
@@ -247,8 +248,64 @@ for data_count,datum in enumerate(target_data):
             target_length = int(datum['Length'])
             orm_write_data[function_needed_data[datum_data_type]]=target_width*target_height*target_length*0.01
             
+        elif datum_data_type in ['Purchase Units','Sales Units']:
+            uom_default_data=pool('product.uom').default_get(['uom_type','rounding'])
+            target_uom_categ_id = pool('product.uom.categ').search([('name','=','Unit')])[0]
+            target_uom_id=pool('product.uom').search([('name','=',datum[datum_data_type]),('category_id','=',target_uom_categ_id)])[0]
+            if not target_uom_id:
+                uom_default_data['name']=datum[datum_data_type]
+                uom_default_data['category_id']=target_uom_categ_id
+                print 'uom_default_data',uom_default_data
+                target_uom_id= pool('product.uom').create(uom_default_data)
+                print 'target_uom_id',target_uom_id
+            orm_write_data[function_needed_data[datum_data_type]]=target_uom_id
+            
+        elif datum_data_type == 'Item Class':
+            target_item_class_id=pool('product.item.class').search([('name','=',datum[datum_data_type])])
+            if not target_item_class_id:
+                target_item_class_id= pool('product.item.class').create({'name':datum[datum_data_type]})
+            orm_write_data[function_needed_data[datum_data_type]]=target_item_class_id     
+            
+        elif datum_data_type == 'Expense':
+            target_expense_id=pool('product.expense').search([('name','=',datum[datum_data_type])])
+            if not target_expense_id:
+                target_expense_id= pool('product.expense').create({'name':datum[datum_data_type]})
+            orm_write_data[function_needed_data[datum_data_type]]=target_expense_id      
+            
+        elif datum_data_type == 'Weight Units':
+             if datum[datum_data_type].lower()=='kg':
+                 orm_write_data['weight']=float(datum['Weight'])
+                 
+        elif datum_data_type in ['Image 1', 'Image 2', 'Image 3', 'Image 4']:
+
+#             'product_id':fields.many2one('product.template', 'Product', required=True),
+#             'priority':fields.integer('Priority'), 
+#             'name':fields.char('Images', size=64, required=False, readonly=False),
+#             'image':fields.binary('Image', filters=None), 
+
+            target_priority=datum_data_type.split(' ')[1]
+            target_image=datum[datum_data_type]
+            image_data={'image':target_name,'priority':target_priority}
+            target_image_id=pool('product.images').search([('image','=',target_image),('priority','=',target_priority)])
+            if not target_image_id:
+                image_ids.append(image_data)
+            else:
+                image_ids.extend(target_image_id)  
+            print 'image_ids',image_ids      
+            
+            
+    if image_ids:
+        if isinstance(image_ids[0],int):
+            orm_write_data['image_ids']=[(6,0,image_ids)]
+        elif isinstance(image_ids[0],dict):
+            orm_write_data['image_ids']=[(0,0,x) for x in image_ids]
+    
+            
+        
+            
     if attribute_line_ids:
         orm_write_data['attribute_line_ids']=[(6,0,attribute_line_ids)]
     if category_line_ids:
         orm_write_data['category_line_ids']=[(6,0,category_line_ids)]
-    print 'orm_write_data',orm_write_data
+#     print 'orm_write_data',orm_write_data
+print 'end'
