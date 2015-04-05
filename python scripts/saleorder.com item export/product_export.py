@@ -325,6 +325,38 @@ for data_count,datum in enumerate(target_data):
         orm_write_data['category_line_ids']=[(6,0,category_line_ids)]
 
     if orm_write_data:
-         print 'orm_write_data','%s out of %s' % (data_count+1,len(target_data)), orm_write_data
          if not pool('product.product').search([('name','=',orm_write_data['name'])]):
-             pool('product.product').create(orm_write_data)    
+
+             #reformat target keys to be float from string
+             target_keys=['incoming_qty', 'qty_unallocated', 'qty_available', 'qty_allocated', 'qty_free','list_price']
+             for x in target_keys:
+                 if x in orm_write_data:
+                     orm_write_data[x]=float(orm_write_data[x])
+             print 'orm_write_data','%s out of %s' % (data_count+1,len(target_data)), orm_write_data
+                     
+             new_product_id=pool('product.product').create(orm_write_data)
+             if 'qty_available' in orm_write_data and orm_write_data['qty_available']>0:
+                 product_obj=pool('product.product').browse(new_product_id)    
+                 
+                 #creates stock_inventory entry
+                 cr.execute("select id from stock_location where name='Stock'")
+                 target_location_id=cr.fetchone()[0]
+                 
+                 stock_inventory_data={
+                                       'name':'INV: %s' % orm_write_data['name'],
+                                       'product_id':new_product_id,
+                                       'location_id':target_location_id,
+                                       }
+                 
+                 new_inventory_id = pool('stock.inventory').create(stock_inventory_data)
+                 
+                 stock_inventory_line_data={
+                                            'inventory_id':new_inventory_id,
+                                            'product_qty':orm_write_data['qty_available'],
+                                            'location_id':target_location_id,
+                                            'product_id':new_product_id,
+                                            'product_uom_id':product_obj.uom_id.id
+                                            }
+                 pool('stock.inventory.line').create(stock_inventory_line_data)
+                 
+                 pool('stock.inventory').action_done([new_inventory_id])
