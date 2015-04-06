@@ -2,6 +2,16 @@
 
 <openerp>
     <data>
+<!-- 		 <record model="ir.ui.view" id="res_partner_salesorder_form_view">
+                <field name="name">res.partner.form</field>
+                <field name="model">res.partner</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="base.view_partner_form"/>
+                <field name="arch" type="xml">
+
+				
+                </field>
+            </record> -->
     
 		 <record model="ir.ui.view" id="res_partner_salesorder_form_view">
                 <field name="name">res.partner.form</field>
@@ -33,6 +43,16 @@
 						<field name="phone2"/>
 					</field>
 
+	                <field name="email" widget="email" attrs="{'required': [('user_ids','!=', [])]}" position="replace">
+						<field name="email" string="Accounts Email" widget="email" attrs="{'required': [('user_ids','!=', [])]}"/>	      
+						        	
+	                </field>
+	                <field name="email" position="after">
+						<field name="email2" widget="email" attrs="{'required': [('user_ids','!=', [])]}"/>	      
+						        	
+	                </field>	                
+	                
+	                
 	
                 </field>
             </record>    

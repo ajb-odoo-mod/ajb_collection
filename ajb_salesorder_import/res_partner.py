@@ -43,6 +43,8 @@ class res_partner(osv.Model):
               'class_2':fields.char('Class 2', size=64, required=False, readonly=False),
               'class_3':fields.char('Class 3', size=64, required=False, readonly=False),
               'phone2': fields.char('Phone 2'),
+              'email':fields.char('Accounts Email'),
+              'email2':fields.char('Purchasing Managers Email'),
               
               }
     _defaults={
