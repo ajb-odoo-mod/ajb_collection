@@ -32,9 +32,9 @@
 								<field name="assistant_phone"/>
 								<field name="customer_since_date"/>
 								<field name="login"/>
-								<field name="class_1"/>
-								<field name="class_2"/>
-								<field name="class_3"/>
+								<field name="class_1_id"/>
+								<field name="class_2_id"/>
+								<field name="class_3_id"/>
 							</group>
 						</page>
 					</page>

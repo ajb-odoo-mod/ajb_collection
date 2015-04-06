@@ -21,7 +21,6 @@ class res_partner_job_title(osv.Model):
               'name':fields.char('Name', size=64, required=False, readonly=False),
               }
     
-
 class res_partner(osv.Model):
     _inherit="res.partner"
     
@@ -39,9 +38,12 @@ class res_partner(osv.Model):
               'assistant_phone':fields.char('Assistant Phone', size=64, required=False, readonly=False),
               'customer_since_date': fields.date('Customer Since'),
               'login':fields.char('Login', size=64, required=False, readonly=False),
-              'class_1':fields.char('Class 1', size=64, required=False, readonly=False),
-              'class_2':fields.char('Class 2', size=64, required=False, readonly=False),
-              'class_3':fields.char('Class 3', size=64, required=False, readonly=False),
+#               'class_1':fields.char('Class 1', size=64, required=False, readonly=False),
+#               'class_2':fields.char('Class 2', size=64, required=False, readonly=False),
+#               'class_3':fields.char('Class 3', size=64, required=False, readonly=False),
+              'class_1_id':fields.many2one('res.partner.category','Class 1'),
+              'class_2_id':fields.many2one('res.partner.category','Class 2'),
+              'class_3_id':fields.many2one('res.partner.category','Class 3'),
               'phone2': fields.char('Phone 2'),
               'email':fields.char('Accounts Email'),
               'email2':fields.char('Purchasing Managers Email'),

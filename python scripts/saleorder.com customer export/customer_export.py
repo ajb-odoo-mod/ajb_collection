@@ -45,9 +45,9 @@ simple_data_export = {
  "Assistant": "assistant_name", 
  "Assistant Phone": "assistant_phone", 
  "Balance": "balance", 
- "Class 1": "class_1", 
- "Class 2": "class_2", 
- "Class 3": "class_3", 
+#  "Class 1": "class_1", 
+#  "Class 2": "class_2", 
+#  "Class 3": "class_3", 
  "Customer Name": "name", 
  "E-mail": "email", 
  "Enable login": "login", 
@@ -78,6 +78,9 @@ function_needed_data = {
  "Type": "customer",
  "Customer since": "customer_since_date", 
  "Gender": "gender", 
+"Class 1": "class_1", 
+"Class 2": "class_2", 
+"Class 3": "class_3",  
  
  
 }
@@ -162,6 +165,17 @@ for data_count,datum in enumerate(target_data):
             cr.execute("select id from res_country where name = '%s'" % datum[datum_data_type])
             target_country_id = cr.fetchone()[0]
             orm_write_data['country_id'] = target_country_id
+            
+        elif datum_data_type in ['Class 1','Class 2','Class 3']:
+            target_class_level=datum_data_type.split(' ')[1]
+            cr.execute("select id from res_partner_category where name='%s'" % datum[datum_data_type])
+            target_partner_category_ids = [x[0] for x in cr.fetchall()]
+            if not target_partner_category_ids:
+                target_partner_category_id=pool('res.partner.category').create({'name':datum[datum_data_type]})
+            else:
+                target_partner_category_id=target_partner_category_ids[0]
+            orm_write_data['class_%s_id' % target_class_level]=target_partner_category_id
+            
         elif datum_data_type == 'Is Active':
             orm_write_data['active']=1
         elif datum_data_type == 'Job Title':
