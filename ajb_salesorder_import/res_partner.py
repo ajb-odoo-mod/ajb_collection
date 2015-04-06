@@ -27,7 +27,7 @@ class res_partner(osv.Model):
     
     _columns={
               'salesorder_ref':fields.char('Salesorder.com Reference', size=64, required=False, readonly=False),
-              'balance': fields.float('Balance', digits=(16, 2)),
+              'balance': fields.float('Opening Balance at time of changing software', digits=(16, 2)),
               'first_name':fields.char('First Name', size=64, required=False, readonly=False),
               'last_name':fields.char('Last Name',size=64,required=False,readonly=False),
               'gender':fields.selection([
