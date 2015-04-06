@@ -235,6 +235,22 @@ for data_count,datum in enumerate(target_data):
             else:
                 target_state_id=temp_ids[0]
             orm_write_data["state_id"]=target_state_id
+            
+            #Handles pricelist declaration by state
+            base_pricelist_state_data=[('NSW','SA'),
+                                       ('QLD','QUEENSLAND','TAS','TASMANIA','WA'),
+                                       ('VC','VIC')
+                                       ]
+            pricelist_names=['Hobart, Launceston, Adelaide, Brisbane, Perth Metro & Regional NSW, SA Pricelist', 
+                             'Regional QLD, TAS, WA Pricelist',
+                             'Sydney, Canberra Metro & Regional VIC Pricelist']
+            cr.execute("select name from res_country_state where id = %s" % target_state_id)
+            target_state_name=cr.fetchone()[0].upper()
+            for price_count,state_elem_list in enumerate(base_pricelist_state_data):
+                if target_state_name in state_elem_list:
+                    cr.execute("select id from product_pricelist where name = '%s'" % pricelist_names[price_count])
+                    orm_write_data['property_product_pricelist']=cr.fetchone()[0]
+            
         elif datum_data_type == "Title":
             cr.execute("select id from res_partner_title where name= '%s'" % datum[datum_data_type])
             temp_ids=[x[0] for x in cr.fetchall()]
@@ -253,6 +269,22 @@ for data_count,datum in enumerate(target_data):
             
             
     if orm_write_data:
+        #Handles pricelist declaration by city
+         if 'property_product_pricelist' not in orm_write_data and 'city' in orm_write_data:
+            base_pricelist_city_data=[('Hobart',
+                                    'Launceston',
+                                    'Adelaide',
+                                    'Brisbane',
+                                    'Perth'),
+                                     ('Sydney','Canberra')]
+            pricelist_names=['Hobart, Launceston, Adelaide, Brisbane, Perth Metro & Regional NSW, SA Pricelist', 
+                                 'Sydney, Canberra Metro & Regional VIC Pricelist']
+            
+            for price_count,state_elem_list in enumerate(base_pricelist_city_data):
+                if orm_write_data['city'] in state_elem_list:
+                    cr.execute("select id from product_pricelist where name = '%s'" % pricelist_names[price_count])
+                    orm_write_data['property_product_pricelist']=cr.fetchone()[0]                    
+        
          print 'orm_write_data','%s out of %s' % (data_count+1,len(target_data)), orm_write_data
          pool('res.partner').create(orm_write_data)
 
