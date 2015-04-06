@@ -326,6 +326,22 @@ for data_count,datum in enumerate(target_data):
 
     if orm_write_data:
          if not pool('product.product').search([('name','=',orm_write_data['name'])]):
+             
+             #handles product category
+             if 'uom_id' in orm_write_data:
+                 temp_base_data={
+                                 'Case(s)':'Case',
+                                 'case(s)':'Case',
+                                 'Keg(s)':'Keg',
+                                 'Kegs':'Keg',
+                                 'Bottle(s)':'Bottle',
+                                 
+                                 }
+                 cr.execute('select name from product_uom where id = %s' % orm_write_data['uom_id'])
+                 temp_target_name=cr.fetchone()[0]
+                 target_category_name=temp_base_data[temp_target_name]
+                 cr.execute("select id from product_category where name ='%s'" % target_category_name)
+                 orm_write_data['categ_id']=cr.fetchone()[0]
 
              #reformat target keys to be float from string
              target_keys=['incoming_qty', 'qty_unallocated', 'qty_available', 'qty_allocated', 'qty_free','list_price']
