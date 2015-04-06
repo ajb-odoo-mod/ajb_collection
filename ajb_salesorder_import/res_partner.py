@@ -45,3 +45,6 @@ class res_partner(osv.Model):
               'phone2': fields.char('Phone 2'),
               
               }
+    _defaults={
+               'comment':'14 days',
+               }
