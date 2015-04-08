@@ -21,6 +21,18 @@ class res_partner_job_title(osv.Model):
               'name':fields.char('Name', size=64, required=False, readonly=False),
               }
     
+class res_partner_shipping_method(osv.Model):
+    _name="res.partner.shipping.method"
+    _columns={
+              'name':fields.char('Name',size=64,required=True),
+              }
+    
+class res_partner_shipping_terms(osv.Model):
+    _name="res.partner.shipping.terms"
+    _columns={
+              'name':fields.char('Name',size=64,required=True),
+              }
+    
 class res_partner(osv.Model):
     _inherit="res.partner"
     
@@ -51,7 +63,16 @@ class res_partner(osv.Model):
             'postal_zip': fields.char('Zip', size=24, change_default=True),
             'postal_city': fields.char('City'),
             'postal_state_id': fields.many2one("res.country.state", 'State', ondelete='restrict'),
-            'postal_country_id': fields.many2one('res.country', 'Country', ondelete='restrict'),    
+            'postal_country_id': fields.many2one('res.country', 'Country', ondelete='restrict'),   
+            
+            #Shipping
+            'property_delivery_carrier': fields.property(
+              type='many2one',
+              relation='delivery.carrier',
+              string="Ship Via",
+              help="This delivery method will be used when invoicing from picking."),            
+            'shipping_method_id':fields.many2one('res.partner.shipping.method','Shipping Method'),
+            'shipping_terms_id':fields.many2one('res.partner.shiipping.terms','Shipping Terms'),
   
               
               }

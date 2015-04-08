@@ -12,6 +12,18 @@
 				
                 </field>
             </record> -->
+            
+
+        <record id="delivery.view_partner_property_form" model="ir.ui.view">
+            <field name="name">res.partner.carrier.property.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="stock.view_partner_property_form" />
+            <field name="arch" type="xml">
+                <field name="property_stock_supplier" position="after">
+<!--                     <field name="property_delivery_carrier"/>
+ -->                </field>
+            </field>
+        </record>            
     
 		 <record model="ir.ui.view" id="res_partner_salesorder_form_view">
                 <field name="name">res.partner.form</field>
@@ -67,6 +79,9 @@
                            </div>	     
        
 	                </field>
+	                
+
+
 
 	                
 	                
@@ -88,6 +103,30 @@
                 </field>
             </record>            
     
+		 <record model="ir.ui.view" id="res_partner_sale_journal_form_view">
+                <field name="name">res.partner.form</field>
+                <field name="model">res.partner</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="sale_journal.view_partner_property_form"/>
+                <field name="arch" type="xml">
+                
+                
+	               
+					<separator string="Invoicing" colspan="2" position="before">
+					
+						<separator string="Shipping" colspan="2"/>
+						<group>
+ 						<field name="property_delivery_carrier" string="Ship Via"/>
+ 						<field name="shipping_method_id"/>
+ 						</group>
+ 						<group>
+						<field name="shipping_terms_id"/>
+						</group>
+					</separator>
+                </field>
+            </record>   
+            
+
     
     </data>
 </openerp>

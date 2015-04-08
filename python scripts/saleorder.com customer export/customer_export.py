@@ -231,6 +231,25 @@ for data_count,datum in enumerate(target_data):
                 orm_write_data["property_delivery_carrier"]=target_delivery_carrier_id
                     
                 
+        elif datum_data_type=="Shipping method":
+            if datum[datum_data_type] or datum[datum_data_type]!='None':
+                cr.execute("select id from res_partner_shipping_method where name='%s'" % datum[datum_data_type])
+                target_ids = [x[0] for x in cr.fetchall()]
+                if not target_ids:
+                    target_id=pool('res.partner.shipping.method').create({'name':datum[datum_data_type]})
+                else:
+                    target_id=target_ids[0]
+                orm_write_data['shipping_method_id']=target_id
+            
+        elif datum_data_type=="Shipping Terms (e.g. FOB)":
+            if datum[datum_data_type] or datum[datum_data_type]!='None':
+                cr.execute("select id from res_partner_shipping_terms where name='%s'" % datum[datum_data_type])
+                target_ids = [x[0] for x in cr.fetchall()]
+                if not target_ids:
+                    target_id=pool('res.partner.shipping.terms').create({'name':datum[datum_data_type]})
+                else:
+                    target_id=target_ids[0]
+                orm_write_data['shipping_terms_id']=target_id
 
         elif datum_data_type == "State/Province":
             # ['VIC', 'SA', 'NSW', 'QLD', 'North Island', '', 'W.A', 'TAS', 'Vic', 'S.A.', 'ALD', 'ACT', 'Ringwood East', 'Carlton', 'Brunswick', 'WA', 'S.A', 'Tas', 'VC', 'W.A.', 'Tasmania', 'PRICES BELOW INC A 5% DISCOUNT']

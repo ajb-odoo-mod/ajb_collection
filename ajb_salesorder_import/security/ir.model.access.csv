@@ -65,5 +65,31 @@ access_res_partner_job_title_erp_manager,res.partner.job.title.erp.manager,model
  access_product_asset_sale_user,product.asset sale use,model_product_asset,base.group_sale_salesman,1,0,0,0  
  access_product_asset_stock_user,product.asset stock user,model_product_asset,stock.group_stock_user,1,1,0,0 
  access_product_asset_stock_manager,product.asset stock_manager,model_product_asset,stock.group_stock_manager,1,1,1,1 
+ access_res_partner_shipping_method_hr_asset_user,res.partner.shipping.method.hr.asset.user,model_res_partner_shipping_method,base.group_hr_user,1,1,1,1  
+ access_res_partner_shipping_method_pos_user,res.partner.shipping.method pos user,model_res_partner_shipping_method,point_of_sale.group_pos_user,1,0,0,0  
+ access_res_partner_shipping_method_pos_manager,res.partner.shipping.method pos manager,model_res_partner_shipping_method,point_of_sale.group_pos_manager,1,1,1,1  
+ access_res_partner_shipping_method_user,res.partner.shipping.method.user,model_res_partner_shipping_method,base.group_user,1,0,0,0  
+ access_res_partner_shipping_method_sale_manager,res.partner.shipping.method salemanager,model_res_partner_shipping_method,base.group_sale_manager,1,1,1,1  
+ access_res_partner_shipping_method_purchase_user,res.partner.shipping.method purchase_user,model_res_partner_shipping_method,purchase.group_purchase_user,1,0,0,0  
+ access_res_partner_shipping_method_purchase_manager,res.partner.shipping.method purchase_manager,model_res_partner_shipping_method,purchase.group_purchase_manager,1,0,0,0  
+ access_res_partner_shipping_method_purchase_manager,res.partner.shipping.method purchase_manager,model_res_partner_shipping_method,purchase.group_purchase_manager,1,1,1,1  
+ access_res_partner_shipping_method_sale_user,res.partner.shipping.method sale use,model_res_partner_shipping_method,base.group_sale_salesman,1,0,0,0  
+ access_res_partner_shipping_method_stock_user,res.partner.shipping.method stock user,model_res_partner_shipping_method,stock.group_stock_user,1,1,0,0 
+ access_res_partner_shipping_method_stock_manager,res.partner.shipping.method stock_manager,model_res_partner_shipping_method,stock.group_stock_manager,1,1,1,1 
+ access_event_res_partner_shipping_method_public,event.res.partner.shipping.method.public,model_res_partner_shipping_method,base.group_public,1,0,0,0
+ access_res_partner_shipping_method_public,res.partner.shipping.method.public,model_res_partner_shipping_method,,1,0,0,0
  access_event_product_asset_public,event.product.asset.public,model_product_asset,base.group_public,1,0,0,0
  access_product_asset_public,product.asset.public,model_product_asset,,1,0,0,0
+ access_res_partner_shipping_terms_hr_asset_user,res.partner.shipping.terms.hr.asset.user,model_res_partner_shipping_terms,base.group_hr_user,1,1,1,1  
+ access_res_partner_shipping_terms_pos_user,res.partner.shipping.terms pos user,model_res_partner_shipping_terms,point_of_sale.group_pos_user,1,0,0,0  
+ access_res_partner_shipping_terms_pos_manager,res.partner.shipping.terms pos manager,model_res_partner_shipping_terms,point_of_sale.group_pos_manager,1,1,1,1  
+ access_res_partner_shipping_terms_user,res.partner.shipping.terms.user,model_res_partner_shipping_terms,base.group_user,1,0,0,0  
+ access_res_partner_shipping_terms_sale_manager,res.partner.shipping.terms salemanager,model_res_partner_shipping_terms,base.group_sale_manager,1,1,1,1  
+ access_res_partner_shipping_terms_purchase_user,res.partner.shipping.terms purchase_user,model_res_partner_shipping_terms,purchase.group_purchase_user,1,0,0,0  
+ access_res_partner_shipping_terms_purchase_manager,res.partner.shipping.terms purchase_manager,model_res_partner_shipping_terms,purchase.group_purchase_manager,1,0,0,0  
+ access_res_partner_shipping_terms_purchase_manager,res.partner.shipping.terms purchase_manager,model_res_partner_shipping_terms,purchase.group_purchase_manager,1,1,1,1  
+ access_res_partner_shipping_terms_sale_user,res.partner.shipping.terms sale use,model_res_partner_shipping_terms,base.group_sale_salesman,1,0,0,0  
+ access_res_partner_shipping_terms_stock_user,res.partner.shipping.terms stock user,model_res_partner_shipping_terms,stock.group_stock_user,1,1,0,0 
+ access_res_partner_shipping_terms_stock_manager,res.partner.shipping.terms stock_manager,model_res_partner_shipping_terms,stock.group_stock_manager,1,1,1,1 
+ access_event_res_partner_shipping_terms_public,event.res.partner.shipping.terms.public,model_res_partner_shipping_terms,base.group_public,1,0,0,0
+ access_res_partner_shipping_terms_public,res.partner.shipping.terms.public,model_res_partner_shipping_terms,,1,0,0,0
