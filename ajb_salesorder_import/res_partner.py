@@ -38,15 +38,21 @@ class res_partner(osv.Model):
               'assistant_phone':fields.char('Assistant Phone', size=64, required=False, readonly=False),
               'customer_since_date': fields.date('Customer Since'),
               'login':fields.char('Login', size=64, required=False, readonly=False),
-#               'class_1':fields.char('Class 1', size=64, required=False, readonly=False),
-#               'class_2':fields.char('Class 2', size=64, required=False, readonly=False),
-#               'class_3':fields.char('Class 3', size=64, required=False, readonly=False),
               'class_1_id':fields.many2one('res.partner.category','Class 1'),
               'class_2_id':fields.many2one('res.partner.category','Class 2'),
               'class_3_id':fields.many2one('res.partner.category','Class 3'),
               'phone2': fields.char('Phone 2'),
               'email':fields.char('Accounts Email'),
               'email2':fields.char('Purchasing Managers Email'),
+              
+              #postal addresses
+            'postal_street': fields.char('Street'),
+            'postal_street2': fields.char('Street2'),
+            'postal_zip': fields.char('Zip', size=24, change_default=True),
+            'postal_city': fields.char('City'),
+            'postal_state_id': fields.many2one("res.country.state", 'State', ondelete='restrict'),
+            'postal_country_id': fields.many2one('res.country', 'Country', ondelete='restrict'),    
+  
               
               }
     _defaults={

@@ -50,8 +50,23 @@
 	                <field name="email" position="after">
 						<field name="email2" widget="email" attrs="{'required': [('user_ids','!=', [])]}"/>	      
 						        	
-	                </field>	                
-	                
+	                </field>	
+	               	<field name="website" position="before">
+                         <label for="postal_street" string="Postal Address"/>
+              				<div>
+                             <field name="postal_street" placeholder="Street..."  attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                             <field name="postal_street2"  attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                             <div class="postal_address_format">
+                                 <field name="postal_city" placeholder="City" style="width: 40%%" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                                 <field name="postal_state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                                 <field name="postal_zip" placeholder="ZIP" style="width: 20%%" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                             </div>
+                             <field name="postal_country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True, "no_create": True}' attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                             <div>
+                             </div>
+                           </div>	     
+       
+	                </field>
 
 	                
 	                
