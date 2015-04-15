@@ -77,7 +77,7 @@ class res_partner(osv.Model):
             help="The fiscal position will determine taxes and accounts used for the partner."),
             
             'company_name':fields.char('Company',size=64),
-        
+            'abn':fields.char('ABN',size=64),
   
               
               }

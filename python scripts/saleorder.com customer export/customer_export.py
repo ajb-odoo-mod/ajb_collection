@@ -192,12 +192,14 @@ for data_count,datum in enumerate(target_data):
 #             cr.execute("select id from res_users where name = '%s'" % datum[datum_data_type] )
             cr.execute("select users.id from res_partner as partner inner join res_users as users on users.partner_id = partner.id where partner.name = '%s'" % datum[datum_data_type] )            
             temp_ids =[x[0] for x in cr.fetchall()]
+            target_user_id=False
             if not temp_ids:
                 #creates new user
                 user_data = pool('res.users').read(uid, ['company_id'])
                 comp_id = user_data['company_id'][0]
                 new_user_data={'name':datum[datum_data_type],'login':datum['E-mail'],'company_id':comp_id}
-                target_user_id = pool('res.users').create(new_user_data)
+                if new_user_data['login'] and new_user_data['login']!='N':
+                    target_user_id = pool('res.users').create(new_user_data)
             else:
                 target_user_id = temp_ids[0]
 
@@ -300,6 +302,13 @@ for data_count,datum in enumerate(target_data):
         elif datum_data_type=='Gender':
             orm_write_data['gender']=datum[datum_data_type].lower()
             
+        elif datum_data_type=='Address Line 2':
+            if 'ABN'in datum[datum_data_type]:
+                orm_write_data['ABN']=datum[datum_data_type].replace('ABN: ','')
+                orm_write_data['street2']=False
+        elif datum_data_type=='E-mail':
+            if datum[datum_data_type]=='N':
+                orm_write_data['email']=False
             
     if orm_write_data:
         #Handles pricelist declaration by city
@@ -319,7 +328,11 @@ for data_count,datum in enumerate(target_data):
                     orm_write_data['property_product_pricelist']=cr.fetchone()[0]                    
         
          print 'orm_write_data','%s out of %s' % (data_count+1,len(target_data)), orm_write_data
-         pool('res.partner').create(orm_write_data)
+         target_ids=pool('res.partner').search([("salesorder_ref","=",orm_write_data['salesorder_ref'])])
+         if target_ids:
+             pool('res.partner').write(target_ids,orm_write_data)
+         else:
+             pool('res.partner').create(orm_write_data)
 
             
             

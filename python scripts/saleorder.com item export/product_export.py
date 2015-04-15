@@ -325,7 +325,7 @@ for data_count,datum in enumerate(target_data):
         orm_write_data['category_line_ids']=[(6,0,category_line_ids)]
 
     if orm_write_data:
-         if not pool('product.product').search([('name','=',orm_write_data['name'])]):
+         if not pool('product.product').search([('default_code','=',orm_write_data['default_code'])]):
              
              #handles product category
              if 'uom_id' in orm_write_data:
