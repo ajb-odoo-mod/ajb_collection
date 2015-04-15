@@ -74,8 +74,10 @@ class res_partner(osv.Model):
             'shipping_method_id':fields.many2one('res.partner.shipping.method','Shipping Method'),
             'shipping_terms_id':fields.many2one('res.partner.shiipping.terms','Shipping Terms'),
             'property_account_position': fields.many2one('account.fiscal.position',"Fiscal Position",
-            help="The fiscal position will determine taxes and accounts used for the partner.",
-        ),
+            help="The fiscal position will determine taxes and accounts used for the partner."),
+            
+            'company_name':fields.char('Company',size=64),
+        
   
               
               }

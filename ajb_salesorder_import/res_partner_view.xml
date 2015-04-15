@@ -78,13 +78,10 @@
                            </div>	     
        
 	                </field>
+	                <field name='parent_id' position="after">
+	                	<field name="company_name" placeholder="Company Name"/>
+	                </field>
 	                
-
-
-
-	                
-	                
-	
                 </field>
             </record>    
             
