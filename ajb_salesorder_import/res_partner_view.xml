@@ -20,8 +20,7 @@
             <field name="inherit_id" ref="stock.view_partner_property_form" />
             <field name="arch" type="xml">
                 <field name="property_stock_supplier" position="after">
-<!--                     <field name="property_delivery_carrier"/>
- -->                </field>
+                </field>
             </field>
         </record>            
     
@@ -123,8 +122,15 @@
 						<field name="shipping_terms_id"/>
 						</group>
 					</separator>
+					
+					<field name="property_account_position" widget="selection">
+						<field name="property_account_position"/>
+						
+					</field>
+					
                 </field>
             </record>   
+       
             
 
     

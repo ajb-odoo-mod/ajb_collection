@@ -73,9 +73,32 @@ class res_partner(osv.Model):
               help="This delivery method will be used when invoicing from picking."),            
             'shipping_method_id':fields.many2one('res.partner.shipping.method','Shipping Method'),
             'shipping_terms_id':fields.many2one('res.partner.shiipping.terms','Shipping Terms'),
+            'property_account_position': fields.many2one('account.fiscal.position',"Fiscal Position",
+            help="The fiscal position will determine taxes and accounts used for the partner.",
+        ),
   
               
               }
+    
+    def _get_default_fiscal_position(self,cr,uid,context=None):
+        pool=self.pool.get
+        res=[]
+        cr.execute("select res_id from ir_model_data where name ='%s'" % 'fiscal_position_normal_taxes_template1')
+        target_ids=[x[0] for x in cr.fetchall()]
+        if target_ids:
+            res=target_ids[0]
+        return res
+
+    def default_get(self, cr, uid, fields, context=None):
+        values = super(res_partner, self).default_get(cr, uid, fields, context)
+        if fields and 'property_account_position' in fields:
+            values['property_account_position']=self._get_default_fiscal_position(cr, uid, context={'mode':'from_default_get'})
+            
+        return values    
+        
+    
     _defaults={
-               'comment':'14 days',
+                'comment':'14 days',
+               'property_account_position':_get_default_fiscal_position,
+               
                }
