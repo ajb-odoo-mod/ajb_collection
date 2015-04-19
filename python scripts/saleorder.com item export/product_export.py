@@ -325,6 +325,8 @@ for data_count,datum in enumerate(target_data):
         orm_write_data['category_line_ids']=[(6,0,category_line_ids)]
 
     if orm_write_data:
+         print 'orm_write_data','%s out of %s' % (data_count+1,len(target_data)), orm_write_data
+        
          if not pool('product.product').search([('default_code','=',orm_write_data['default_code'])]):
              
              #handles product category
@@ -339,16 +341,19 @@ for data_count,datum in enumerate(target_data):
                                  }
                  cr.execute('select name from product_uom where id = %s' % orm_write_data['uom_id'])
                  temp_target_name=cr.fetchone()[0]
-                 target_category_name=temp_base_data[temp_target_name]
-                 cr.execute("select id from product_category where name ='%s'" % target_category_name)
-                 orm_write_data['categ_id']=cr.fetchone()[0]
+                 if temp_target_name in temp_base_data:
+                     target_category_name=temp_base_data[temp_target_name]
+                     cr.execute("select id from product_category where name ='%s'" % target_category_name)
+                     orm_write_data['categ_id']=cr.fetchone()[0]
+                 else:
+                     cr.execute("select id from product_category where name='All'")
+                     orm_write_data['categ_id']=cr.fetchone()[0]
 
              #reformat target keys to be float from string
              target_keys=['incoming_qty', 'qty_unallocated', 'qty_available', 'qty_allocated', 'qty_free','list_price']
              for x in target_keys:
                  if x in orm_write_data:
                      orm_write_data[x]=float(orm_write_data[x])
-             print 'orm_write_data','%s out of %s' % (data_count+1,len(target_data)), orm_write_data
                      
              new_product_id=pool('product.product').create(orm_write_data)
              if 'qty_available' in orm_write_data and orm_write_data['qty_available']>0:
