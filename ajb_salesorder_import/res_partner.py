@@ -72,7 +72,7 @@ class res_partner(osv.Model):
               string="Ship Via",
               help="This delivery method will be used when invoicing from picking."),            
             'shipping_method_id':fields.many2one('res.partner.shipping.method','Shipping Method'),
-            'shipping_terms_id':fields.many2one('res.partner.shiipping.terms','Shipping Terms'),
+            'shipping_terms_id':fields.many2one('res.partner.shipping.terms','Shipping Terms'),
             'property_account_position': fields.many2one('account.fiscal.position',"Fiscal Position",
             help="The fiscal position will determine taxes and accounts used for the partner."),
             
