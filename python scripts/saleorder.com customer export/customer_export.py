@@ -153,6 +153,8 @@ for y in function_needed_data:
 
 #value orm write organizer
 for data_count,datum in enumerate(target_data):
+    if data_count <= 488:
+        continue
     orm_write_data={}
 #     print 'datum',datum
     #HANDLES SIMPLE DATA EXPORT
@@ -304,7 +306,7 @@ for data_count,datum in enumerate(target_data):
             
         elif datum_data_type=='Address Line 2':
             if 'ABN'in datum[datum_data_type]:
-                orm_write_data['ABN']=datum[datum_data_type].replace('ABN: ','')
+                orm_write_data['abn']=datum[datum_data_type].replace('ABN: ','')
                 orm_write_data['street2']=False
         elif datum_data_type=='E-mail':
             if datum[datum_data_type]=='N':
