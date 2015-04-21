@@ -23,7 +23,7 @@
 Sales Module Modification
     """,
     'author': 'Romeo Abulencia',
-    'depends': ['base','crm_profiling'],
+    'depends': ['base','crm_profiling','delivery'],
     'demo': [],
     'data': [
         'security/ir.model.access.csv',
