@@ -153,8 +153,6 @@ for y in function_needed_data:
 
 #value orm write organizer
 for data_count,datum in enumerate(target_data):
-    if data_count <= 488:
-        continue
     orm_write_data={}
 #     print 'datum',datum
     #HANDLES SIMPLE DATA EXPORT
