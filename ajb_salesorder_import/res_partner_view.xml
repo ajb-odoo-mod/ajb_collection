@@ -81,9 +81,9 @@
 	                <field name="website" position="after">
 	                	<field name="abn"/>
 	                </field>
-	                <field name='parent_id' position="after">
-	                	<field name="company_name" placeholder="Company Name"/>
-	                </field>
+	                <div name='div_type' position="after">
+		                	<field name="company_name" placeholder="Company Name"/>
+	                </div>
 	                
                 </field>
             </record>    

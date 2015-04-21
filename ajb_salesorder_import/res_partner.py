@@ -76,7 +76,7 @@ class res_partner(osv.Model):
             'property_account_position': fields.many2one('account.fiscal.position',"Fiscal Position",
             help="The fiscal position will determine taxes and accounts used for the partner."),
             
-            'company_name':fields.char('Company',size=64),
+            'company_name':fields.char('Company Name',size=64),
             'abn':fields.char('ABN',size=64),
   
               
