@@ -59,7 +59,7 @@ simple_data_export = {
  "Ref #": "salesorder_ref", 
  "Telephone 1": "phone", 
  "Telephone 2": "phone2", 
- "Terms": "comment", 
+#  "Terms": "comment", 
  "Town/City": "city", 
  "Website": "website"
 }
@@ -81,7 +81,7 @@ function_needed_data = {
 "Class 1": "class_1", 
 "Class 2": "class_2", 
 "Class 3": "class_3",  
- 
+ "Terms":'property_payment_term',
  
 }
 
@@ -309,6 +309,16 @@ for data_count,datum in enumerate(target_data):
         elif datum_data_type=='E-mail':
             if datum[datum_data_type]=='N':
                 orm_write_data['email']=False
+                
+        elif datum_data_type == 'Terms':
+            target_term_name= datum[datum_data_type]
+            cr.execute("select id from account_payment_term where name='%s'" % target_term_name)
+            target_term_ids = [x[0] for x in cr.fetchall()]
+            if not target_term_ids:
+                target_term_id = pool('account.payment.term').create({'name':target_term_name})
+            else:
+                target_term_id = target_term_ids[0]
+            orm_write_data['property_payment_term']=target_term_id
             
     if orm_write_data:
         #Handles pricelist declaration by city
