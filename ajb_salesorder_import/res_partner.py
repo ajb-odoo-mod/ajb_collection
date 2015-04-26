@@ -93,14 +93,23 @@ class res_partner(osv.Model):
 
     def default_get(self, cr, uid, fields, context=None):
         values = super(res_partner, self).default_get(cr, uid, fields, context)
-        if fields and 'property_account_position' in fields:
-            values['property_account_position']=self._get_default_fiscal_position(cr, uid, context={'mode':'from_default_get'})
+        if fields:
+            if 'property_account_position' in fields:
+                values['property_account_position']=self._get_default_fiscal_position(cr, uid, context={'mode':'from_default_get'})
+            if 'property_payment_term' in fields:
+                values['property_payment_term']=self._get_default_property_payment_term(cr, uid, context)
             
         return values    
-        
+    
+    def _get_default_property_payment_term(self,cr,uid,context=None):
+        cr.execute("select res_id from ir_model_data where name = 'ajb_payment_term1' and model='account.payment.term'")
+        target_ids=[x[0] for x in cr.fetchall()]
+        if target_ids:
+            return target_ids[0]
+        return target_ids
     
     _defaults={
-                'comment':'14 days',
+               'property_payment_term':_get_default_property_payment_term,
                'property_account_position':_get_default_fiscal_position,
                
                }

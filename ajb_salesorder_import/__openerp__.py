@@ -29,6 +29,7 @@ Sales Module Modification
         'security/ir.model.access.csv',
         'res_partner_view.xml',
         'product_template_view.xml',
+        'res_partner_data.xml',
 
     ],
     'installable': True,

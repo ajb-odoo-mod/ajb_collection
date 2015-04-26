@@ -1,0 +1,11 @@
+<openerp>
+    <data>
+    
+    <!-- Account payment term related records -->
+        <record id="ajb_payment_term1" model="account.payment.term">
+            <field name="name">14 days</field>
+        </record>    
+    
+    
+    </data>
+</openerp>
