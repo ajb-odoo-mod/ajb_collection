@@ -22,10 +22,11 @@
 Sales Module Modification
     """,
     'author': 'Romeo Abulencia',
-    'depends': ['sale','account'],
+    'depends': ['sale','warning','account'],
     'demo': [],
     'data': [
         'sale_view.xml',
+        'account_invoice_view.xml',
 
     ],
     'installable': True,

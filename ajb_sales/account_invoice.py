@@ -17,6 +17,8 @@ import time
 
 from openerp.osv import osv, fields
 
+from datetime import datetime
+
 from openerp import tools, SUPERUSER_ID
 from openerp.tools.translate import _
 from openerp.tools.mail import plaintext2html
@@ -38,9 +40,51 @@ class account_invoice(osv.Model):
 
     _columns={
               'reformatted_date_invoice': fields.function(_ajb_reformat_date, string='date', type='date'),
+        'pricelist_id': fields.many2one('product.pricelist', 'Pricelist', required=True, readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, help="Pricelist for current invoice."),
+              
 
               }
     
+    
+    def onchange_partner_id(self,cr,uid,ids, type, partner_id, date_invoice=False,
+            payment_term=False, partner_bank_id=False, company_id=False,context=False):
+        print 'onchange_partner_id'
+        print 'locals()',locals()
+        result = super(account_invoice,self).onchange_partner_id(cr,uid,ids,type,
+                                                            partner_id,
+                                                            date_invoice=date_invoice,
+                                                            payment_term=payment_term,
+                                                            partner_bank_id=partner_bank_id,
+                                                            company_id=company_id)
+        print 'result',result
+        #pricelist id value insertion
+        part=self.pool.get('res.partner').browse(cr,uid,partner_id)
+        pricelist_id = part.property_product_pricelist and part.property_product_pricelist.id or False        
+        if result and 'value' in result and isinstance(result['value'],dict):
+            result['value']['pricelist_id']=pricelist_id
+        else:
+            result['value']={'pricelist_id':pricelist_id}
+        return result   
+    
+class account_invoice_line(osv.Model):
+    _inherit='account.invoice.line'
+    
+    def product_id_change(self, cr,uid, ids,product, uom_id, qty=0, name='', type='out_invoice',
+            partner_id=False, fposition_id=False, price_unit=False, currency_id=False,
+            company_id=None,context=False,pricelist_id=False):    
+        result=super(account_invoice_line,self).product_id_change(cr, uid, ids, product, uom_id, qty, name, type, partner_id, fposition_id, price_unit, currency_id, company_id=company_id, context=context)
+        #price modification based on connected pricelist
+        if result  and 'value' in result and result['value'] and 'price_unit' in result['value'] and result['value']['price_unit']:
+            if not pricelist_id:
+                part = self.pool.get('res.partner').read(cr,uid,partner_id,['property_product_pricelist'])
+                pricelist_id=part['property_product_pricelist'][0]
+            price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id],
+                    product, qty or 1.0, partner_id, {
+                        'uom': uom_id,
+                        'date': datetime.now().strftime('%Y-%m-%d'),
+                        })[pricelist_id]
+            result['value']['price_unit']=price
+        return result
 class mail_notification(osv.Model):
     _inherit='mail.notification'
     
