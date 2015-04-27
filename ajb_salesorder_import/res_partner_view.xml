@@ -69,7 +69,7 @@
               				<div>
                              <field name="postal_street" placeholder="Street..."  attrs="{'readonly': [('use_parent_address','=',True)]}"/>
                              <field name="postal_street2"  attrs="{'readonly': [('use_parent_address','=',True)]}"/>
-                             <field name="postal_suburb"/>
+                             <field name="postal_suburb" placeholder="Suburb"/>
                              <div class="postal_address_format">
                                  <field name="postal_city" placeholder="City" style="width: 40%%" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
                                  <field name="postal_state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)" attrs="{'readonly': [('use_parent_address','=',True)]}"/>

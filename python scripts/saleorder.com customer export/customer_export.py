@@ -147,10 +147,10 @@ for y in function_needed_data:
         if target_data_type in x:
             if x[target_data_type] not in data_values:
                 data_values.append(x[target_data_type])
-                   
+                    
     print 'target_data_type',target_data_type        
     print 'data_values',data_values
-   
+    
 #value orm write organizer
 for data_count,datum in enumerate(target_data):
     orm_write_data={}
@@ -159,13 +159,13 @@ for data_count,datum in enumerate(target_data):
     for datum_data_type in datum:
         if datum_data_type in simple_data_export:
             orm_write_data[simple_data_export[datum_data_type]]=datum[datum_data_type]
-   
+    
     #HANDLES DATA REQUIRING FUNCTIONS
         if datum_data_type == 'Country':
             cr.execute("select id from res_country where name = '%s'" % datum[datum_data_type])
             target_country_id = cr.fetchone()[0]
             orm_write_data['country_id'] = target_country_id
-               
+                
         elif datum_data_type in ['Class 1','Class 2','Class 3']:
             target_class_level=datum_data_type.split(' ')[1]
             cr.execute("select id from res_partner_category where name='%s'" % datum[datum_data_type])
@@ -175,20 +175,20 @@ for data_count,datum in enumerate(target_data):
             else:
                 target_partner_category_id=target_partner_category_ids[0]
             orm_write_data['class_%s_id' % target_class_level]=target_partner_category_id
-               
+                
         elif datum_data_type == 'Is Active':
             orm_write_data['active']=1
         elif datum_data_type == 'Job Title':
             cr.execute("select id from res_partner_job_title where name='%s'" % datum[datum_data_type])
             temp_ids = [x[0] for x in cr.fetchall()]
-               
+                
             if not temp_ids:
                 target_job_title_id=pool('res.partner.job.title').create({'name':datum[datum_data_type]})
             else:
                 target_job_title_id =temp_ids[0]
             orm_write_data['job_title_id']=target_job_title_id
         elif datum_data_type=='Owner':
-   
+    
 #             cr.execute("select id from res_users where name = '%s'" % datum[datum_data_type] )
             cr.execute("select users.id from res_partner as partner inner join res_users as users on users.partner_id = partner.id where partner.name = '%s'" % datum[datum_data_type] )            
             temp_ids =[x[0] for x in cr.fetchall()]
@@ -202,9 +202,9 @@ for data_count,datum in enumerate(target_data):
                     target_user_id = pool('res.users').create(new_user_data)
             else:
                 target_user_id = temp_ids[0]
-   
+    
             orm_write_data['user_id']=target_user_id
-               
+                
         elif datum_data_type=='Price List':
              pricelist_base_data={
                                   "None": "Melbourne Metro Pricelist", 
@@ -216,7 +216,7 @@ for data_count,datum in enumerate(target_data):
              target_ids=[x[0] for x in cr.fetchall()]
              if target_ids:
                  orm_write_data['property_product_pricelist']=target_ids[0]
-   
+    
         elif datum_data_type == "Ship via":
             if datum[datum_data_type] or datum[datum_data_type]!='None':
                 cr.execute("select id from delivery_carrier where name = '%s'" % datum[datum_data_type])
@@ -230,8 +230,8 @@ for data_count,datum in enumerate(target_data):
                 else:
                     target_delivery_carrier_id = temp_ids[0]
                 orm_write_data["property_delivery_carrier"]=target_delivery_carrier_id
-                       
-                   
+                        
+                    
         elif datum_data_type=="Shipping method":
             if datum[datum_data_type] or datum[datum_data_type]!='None':
                 cr.execute("select id from res_partner_shipping_method where name='%s'" % datum[datum_data_type])
@@ -241,7 +241,7 @@ for data_count,datum in enumerate(target_data):
                 else:
                     target_id=target_ids[0]
                 orm_write_data['shipping_method_id']=target_id
-               
+                
         elif datum_data_type=="Shipping Terms (e.g. FOB)":
             if datum[datum_data_type] or datum[datum_data_type]!='None':
                 cr.execute("select id from res_partner_shipping_terms where name='%s'" % datum[datum_data_type])
@@ -251,7 +251,7 @@ for data_count,datum in enumerate(target_data):
                 else:
                     target_id=target_ids[0]
                 orm_write_data['shipping_terms_id']=target_id
-   
+    
         elif datum_data_type == "State/Province":
             # ['VIC', 'SA', 'NSW', 'QLD', 'North Island', '', 'W.A', 'TAS', 'Vic', 'S.A.', 'ALD', 'ACT', 'Ringwood East', 'Carlton', 'Brunswick', 'WA', 'S.A', 'Tas', 'VC', 'W.A.', 'Tasmania', 'PRICES BELOW INC A 5% DISCOUNT']
             # use given country for state creation if needed
@@ -259,7 +259,7 @@ for data_count,datum in enumerate(target_data):
             cr.execute("select id from res_country where name = '%s'" % given_country)
             temp_ids=[x[0] for x in cr.fetchall()]
             country_id = temp_ids[0]
-               
+                
             #search for state with the given country
             cr.execute("select id from res_country_state where country_id = %s and name = '%s'" % (country_id,datum[datum_data_type]))
             temp_ids=[x[0] for x in cr.fetchall()]
@@ -269,7 +269,7 @@ for data_count,datum in enumerate(target_data):
             else:
                 target_state_id=temp_ids[0]
             orm_write_data["state_id"]=target_state_id
-               
+                
 #             #Handles pricelist declaration by state
 #             base_pricelist_state_data=[('NSW','SA'),
 #                                        ('QLD','QUEENSLAND','TAS','TASMANIA','WA'),
@@ -284,7 +284,7 @@ for data_count,datum in enumerate(target_data):
 #                 if target_state_name in state_elem_list:
 #                     cr.execute("select id from product_pricelist where name = '%s'" % pricelist_names[price_count])
 #                     orm_write_data['property_product_pricelist']=cr.fetchone()[0]
-               
+                
         elif datum_data_type == "Title":
             cr.execute("select id from res_partner_title where name= '%s'" % datum[datum_data_type])
             temp_ids=[x[0] for x in cr.fetchall()]
@@ -292,7 +292,7 @@ for data_count,datum in enumerate(target_data):
                 target_title_id = pool('res.partner.title').create({'name':datum[datum_data_type]})
             else:
                 target_title_id = temp_ids[0]
-                  
+                   
             orm_write_data["title"]=target_title_id
         elif datum_data_type == "Type":
             orm_write_data["customer"]=1
@@ -300,7 +300,7 @@ for data_count,datum in enumerate(target_data):
             orm_write_data['customer_since_date']=datetime.datetime.strptime(datum[datum_data_type],'%d/%m/%Y').strftime('%Y-%m-%d')
         elif datum_data_type=='Gender':
             orm_write_data['gender']=datum[datum_data_type].lower()
-               
+                
         elif datum_data_type=='Address Line 2':
             if 'ABN'in datum[datum_data_type]:
                 orm_write_data['abn']=datum[datum_data_type].replace('ABN: ','')
@@ -308,7 +308,7 @@ for data_count,datum in enumerate(target_data):
         elif datum_data_type=='E-mail':
             if datum[datum_data_type]=='N':
                 orm_write_data['email']=False
-                   
+                    
         elif datum_data_type == 'Terms':
             target_term_name= datum[datum_data_type]
             cr.execute("select id from account_payment_term where name='%s'" % target_term_name)
@@ -318,7 +318,7 @@ for data_count,datum in enumerate(target_data):
             else:
                 target_term_id = target_term_ids[0]
             orm_write_data['property_payment_term']=target_term_id
-               
+                
     if orm_write_data:
 #         #Handles pricelist declaration by city
 #          if 'property_product_pricelist' not in orm_write_data and 'city' in orm_write_data:
@@ -335,7 +335,7 @@ for data_count,datum in enumerate(target_data):
 #                 if orm_write_data['city'] in state_elem_list:
 #                     cr.execute("select id from product_pricelist where name = '%s'" % pricelist_names[price_count])
 #                     orm_write_data['property_product_pricelist']=cr.fetchone()[0]                    
-           
+            
          print 'orm_write_data','%s out of %s' % (data_count+1,len(target_data)), orm_write_data
          target_ids=pool('res.partner').search([("salesorder_ref","=",orm_write_data['salesorder_ref'])])
          if target_ids:
@@ -385,7 +385,7 @@ for sheet_name in workbook.sheet_names():
                    'abn':datum['ABN'],
                    'postal_street':datum['Address Line 1'],
                    'postal_street2':datum['Address Line 2'],
-                   'suburb': datum['Suburb'],
+                   'postal_suburb': datum['Suburb'],
                    'postal_zip': datum['Post Code'],
 #                    'postal_state_id': datum['State'],
                    'phone': datum['Phone'],
