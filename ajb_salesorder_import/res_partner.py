@@ -60,6 +60,7 @@ class res_partner(osv.Model):
               #postal addresses
             'postal_street': fields.char('Street'),
             'postal_street2': fields.char('Street2'),
+            'postal_suburb': fields.char('Suburb'),
             'postal_zip': fields.char('Zip', size=24, change_default=True),
             'postal_city': fields.char('City'),
             'postal_state_id': fields.many2one("res.country.state", 'State', ondelete='restrict'),
@@ -79,7 +80,8 @@ class res_partner(osv.Model):
             'company_name':fields.char('Company Name',size=64),
             'abn':fields.char('ABN',size=64),
   
-              
+            'delivery_instructions1':fields.char('Delivery Instructions 1'),
+            'delivery_instructions2':fields.char('Delivery Instructions 2'),
               }
     
     def _get_default_fiscal_position(self,cr,uid,context=None):
