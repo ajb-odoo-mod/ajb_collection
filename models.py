@@ -892,7 +892,8 @@ class BaseModel(object):
                 if name == '.id':
                     current[i] = str(record.id)
                 elif name == 'id':
-                    current[i] = record.__export_xml_id()
+#                    current[i] = record.__export_xml_id()
+                    current[i] = record.name
                 else:
                     field = record._fields[name]
                     value = record[name]
