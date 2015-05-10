@@ -26,6 +26,7 @@ Account Module Modification
     'depends': ['sale','account'],
     'demo': [],
     'data': [
+        'report/report_invoice.xml',
         'views/report_invoice.xml',
 
     ],
