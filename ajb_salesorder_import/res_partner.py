@@ -82,6 +82,8 @@ class res_partner(osv.Model):
   
             'delivery_instructions1':fields.char('Delivery Instructions 1'),
             'delivery_instructions2':fields.char('Delivery Instructions 2'),
+            'account_notes': fields.text('Account Notes'),
+
               }
     
     def _get_default_fiscal_position(self,cr,uid,context=None):
@@ -113,5 +115,6 @@ class res_partner(osv.Model):
     _defaults={
                'property_payment_term':_get_default_property_payment_term,
                'property_account_position':_get_default_fiscal_position,
+               'is_company':True,
                
                }

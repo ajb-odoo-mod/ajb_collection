@@ -1,141 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <openerp>
-    <data>
-<!-- 		 <record model="ir.ui.view" id="res_partner_salesorder_form_view">
-                <field name="name">res.partner.form</field>
-                <field name="model">res.partner</field>
-                <field name="type">form</field>
-                <field name="inherit_id" ref="base.view_partner_form"/>
-                <field name="arch" type="xml">
-
-				
-                </field>
-            </record> -->
-            
-
-        <record id="delivery.view_partner_property_form" model="ir.ui.view">
-            <field name="name">res.partner.carrier.property.form.inherit</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="stock.view_partner_property_form" />
-            <field name="arch" type="xml">
-                <field name="property_stock_supplier" position="after">
-                </field>
+   <data>
+      <!-- 		 <record model="ir.ui.view" id="res_partner_salesorder_form_view">
+         <field name="name">res.partner.form</field>
+         <field name="model">res.partner</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="base.view_partner_form"/>
+         <field name="arch" type="xml">
+         
+         
+         </field>
+         </record> -->
+      <record id="delivery.view_partner_property_form" model="ir.ui.view">
+         <field name="name">res.partner.carrier.property.form.inherit</field>
+         <field name="model">res.partner</field>
+         <field name="inherit_id" ref="stock.view_partner_property_form" />
+         <field name="arch" type="xml">
+            <field name="property_stock_supplier" position="after">
             </field>
-        </record>            
-    
-		 <record model="ir.ui.view" id="res_partner_salesorder_form_view">
-                <field name="name">res.partner.form</field>
-                <field name="model">res.partner</field>
-                <field name="type">form</field>
-                <field name="inherit_id" ref="crm_profiling.view_partner_form"/>
-                <field name="arch" type="xml">
-					<page string="Profiling" groups="base.group_user" position="after">
-						<page string="Others" groups="base.group_user">
-							<group>
-								<field name="salesorder_ref"/>
-								<field name="delivery_instructions1"/>
-								<field name="delivery_instructions2"/>
-								<field name="balance"/>
-								<field name="first_name"/>
-								<field name="last_name"/>
-								<field name="gender"/>
-								<field name="job_title_id"/>
-								<field name="assistant_name"/>
-								<field name="assistant_phone"/>
-								<field name="customer_since_date"/>
-								<field name="login"/>
-								<field name="class_1_id"/>
-								<field name="class_2_id"/>
-								<field name="class_3_id"/>
-							</group>
-						</page>
-					</page>
-					
-					<field name="phone" position="after">
-						<field name="phone2"/>
-					</field>
-
-	                <field name="email" widget="email" attrs="{'required': [('user_ids','!=', [])]}" position="replace">
-						<field name="email" string="Accounts Email" widget="email" attrs="{'required': [('user_ids','!=', [])]}"/>	      
-						        	
-	                </field>
-	                <field name="email" position="after">
-						<field name="email2" widget="email" attrs="{'required': [('user_ids','!=', [])]}"/>	      
-						        	
-	                </field>	
-	               	<field name="website" position="before">
-                         <label for="postal_street" string="Postal Address"/>
-              				<div>
-                             <field name="postal_street" placeholder="Street..."  attrs="{'readonly': [('use_parent_address','=',True)]}"/>
-                             <field name="postal_street2"  attrs="{'readonly': [('use_parent_address','=',True)]}"/>
-                             <field name="postal_suburb" placeholder="Suburb"/>
-                             <div class="postal_address_format">
-                                 <field name="postal_city" placeholder="City" style="width: 40%%" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
-                                 <field name="postal_state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
-                                 <field name="postal_zip" placeholder="ZIP" style="width: 20%%" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
-                             </div>
-                             <field name="postal_country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True, "no_create": True}' attrs="{'readonly': [('use_parent_address','=',True)]}"/>
-                             <div>
-                             </div>
-                           </div>	     
-       
-	                </field>
-	                <field name="website" position="after">
-	                	<field name="abn"/>
-	                </field>
-	                <div name='div_type' position="after">
-		                	<field name="company_name" placeholder="Company Name"/>
-	                </div>
-	                
-                </field>
-            </record>    
-            
- 		 <record model="ir.ui.view" id="res_partner_inherit_form_view">
-                <field name="name">res.partner.form</field>
-                <field name="model">res.partner</field>
-                <field name="type">form</field>
-                <field name="inherit_id" ref="base.view_partner_form"/>
-                <field name="arch" type="xml">
-                    <label for="street" string="Address" position="replace">
-						<label for="street" string="Delivery Address"/>
-                    
-                    </label>
-
-                </field>
-            </record>            
-    
-		 <record model="ir.ui.view" id="res_partner_sale_journal_form_view">
-                <field name="name">res.partner.form</field>
-                <field name="model">res.partner</field>
-                <field name="type">form</field>
-                <field name="inherit_id" ref="sale_journal.view_partner_property_form"/>
-                <field name="arch" type="xml">
-                
-                
-	               
-					<separator string="Invoicing" colspan="2" position="before">
-					
-						<separator string="Shipping" colspan="2"/>
-						<group>
- 						<field name="property_delivery_carrier" string="Ship Via"/>
- 						<field name="shipping_method_id"/>
- 						</group>
- 						<group>
-						<field name="shipping_terms_id"/>
-						</group>
-					</separator>
-					
-					<field name="property_account_position" widget="selection">
-						<field name="property_account_position"/>
-						
-					</field>
-					
-                </field>
-            </record>   
-       
-            
-
-    
-    </data>
+         </field>
+      </record>
+      <record model="ir.ui.view" id="base_res_partner_salesorder_form_view">
+         <field name="name">base.res.partner.form</field>
+         <field name="model">res.partner</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="base.view_partner_form"/>
+         <field name="arch" type="xml">
+            <field name="title"  options='{"no_open": True}' position="replace"/>
+            <field name="fax" position="replace"/>
+            <field name="user_id" position="replace">
+               <field name="user_id" required="1"/>
+            </field>
+            <notebook position="inside">
+               <page string="Account Notes">
+                  <field name="account_notes"/>
+               </page>
+            </notebook>
+         </field>
+      </record>
+      <record model="ir.ui.view" id="product_view_partner_property_form">
+         <field name="name">base.res.partner.form</field>
+         <field name="model">res.partner</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="product.view_partner_property_form"/>
+         <field name="arch" type="xml">
+            <field name="property_product_pricelist" groups="product.group_sale_pricelist" position="replace">
+               <field name="property_product_pricelist" groups="product.group_sale_pricelist" required="1"/>
+            </field>
+         </field>
+      </record>
+      <record model="ir.ui.view" id="account_view_partner_property_form">
+         <field name="name">base.res.partner.form</field>
+         <field name="model">res.partner</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="account.view_partner_property_form"/>
+         <field name="arch" type="xml">
+            <field name="property_account_receivable" groups="account.group_account_invoice" >
+               <field name="property_account_receivable" groups="account.group_account_invoice" required="1" />
+            </field>
+            <field name="property_payment_term" widget="selection" position="replace">
+               <field name="property_payment_term" widget="selection" required="1"/>
+            </field>
+            <field name="property_account_payable" groups="account.group_account_invoice" position="replace">
+               <field name="property_account_payable" groups="account.group_account_invoice" required="1"/>
+            </field>
+         </field>
+      </record>
+      <record model="ir.ui.view" id="res_partner_salesorder_form_view">
+         <field name="name">res.partner.form</field>
+         <field name="model">res.partner</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="crm_profiling.view_partner_form"/>
+         <field name="arch" type="xml">
+            <page string="Profiling" groups="base.group_user" position="after">
+               <page string="Others" groups="base.group_user">
+                  <group>
+                     <field name="salesorder_ref"/>
+                     <field name="delivery_instructions1" required="1"/>
+                     <field name="delivery_instructions2"/>
+                     <field name="balance"/>
+                     <field name="first_name"/>
+                     <field name="last_name"/>
+                     <field name="gender"/>
+                     <field name="job_title_id"/>
+                     <field name="assistant_name"/>
+                     <field name="assistant_phone"/>
+                     <field name="customer_since_date"/>
+                     <field name="login"/>
+                     <field name="class_1_id"/>
+                     <field name="class_2_id"/>
+                     <field name="class_3_id"/>
+                  </group>
+               </page>
+            </page>
+            <field name="phone" position="replace">
+               <field name="phone"  required="1"/>
+            </field>
+            <field name="phone" position="after">
+               <field name="phone2"/>
+            </field>
+            <field name="email" widget="email" attrs="{'required': [('user_ids','!=', [])]}" position="replace">
+               <field name="email" string="Accounts Email" widget="email" attrs="{'required': [('user_ids','!=', [])]}"  required="1"/>
+            </field>
+            <field name="email" position="after">
+               <field name="email2" widget="email" attrs="{'required': [('user_ids','!=', [])]}"  required="1"/>
+            </field>
+            <field name="website" position="before">
+               <label for="postal_street" string="Postal Address"/>
+                  <div>
+                     <field name="postal_street" placeholder="Street..."  attrs="{'readonly': [('use_parent_address','=',True)]}"  required="1"/>
+                     <field name="postal_street2"  attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                     <field name="postal_suburb" placeholder="Suburb"/>
+                     <div class="postal_address_format">
+                        <field name="postal_city" placeholder="City" style="width: 40%%" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                        <field name="postal_state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                        <field name="postal_zip" placeholder="ZIP" style="width: 20%%" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                     </div>
+                     <field name="postal_country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True, "no_create": True}' attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                     <div>
+                     </div>
+                  </div>
+            </field>
+            <field name="website" position="after">
+            <field name="abn"  required="1"/>
+            </field>
+            <div name='div_type' position="after">
+            <field name="company_name" placeholder="Company Name" required="1"/>
+            </div>
+         </field>
+      </record>
+      <record model="ir.ui.view" id="res_partner_inherit_form_view">
+      <field name="name">res.partner.form</field>
+      <field name="model">res.partner</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+      <label for="street" string="Address" position="replace">
+      <label for="street" string="Delivery Address"  required="1"/>
+      </label>
+      <field name="street" placeholder="Street..."  attrs="{'readonly': [('use_parent_address','=',True)]}" position="replace">
+      <field name="street" placeholder="Street..."  attrs="{'readonly': [('use_parent_address','=',True)]}" required="1"/>
+      </field>                    
+      </field>
+      </record>            
+      <record model="ir.ui.view" id="res_partner_sale_journal_form_view">
+         <field name="name">res.partner.form</field>
+         <field name="model">res.partner</field>
+         <field name="type">form</field>
+         <field name="inherit_id" ref="sale_journal.view_partner_property_form"/>
+         <field name="arch" type="xml">
+            <separator string="Invoicing" colspan="2" position="before">
+               <separator string="Shipping" colspan="2"/>
+               <group>
+                  <field name="property_delivery_carrier" string="Ship Via"  required="1"/>
+                  <field name="shipping_method_id"/>
+               </group>
+               <group>
+                  <field name="shipping_terms_id"/>
+               </group>
+            </separator>
+            <field name="property_account_position" widget="selection" position="replace">
+               <field name="property_account_position" required="1"/>
+            </field>
+         </field>
+      </record>
+   </data>
 </openerp>
