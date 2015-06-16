@@ -44,7 +44,11 @@
             <td>
               <address t-field="o.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}"/>
             </td>
-            <td>Delivery instruction data</td>
+            <td>
+		            <span t-field="o.partner_id.delivery_instructions1" t-if="o.partner_id.delivery_instructions1"/>
+		            <span t-field="o.partner_id.delivery_instructions2" t-if="o.partner_id.delivery_instructions2"/>
+                
+            </td>
           </tr>
         </tbody>
       </table>
@@ -124,8 +128,29 @@
           <td><field name="o.currency_id.name"/></td>
         </tr>
       </table>
+      <table>
+        <tr>
+            <td>
+We partner with Suncorp for our accounts receivable, please pay direct to:Suncorp Bank, BSB: 484 799 ACC: 130320641 Or, make cheques out to: Suncorp Bank, GPO BOX 406, Brisbane, Queensland 4001
+            </td>
+        </tr>
+        <tr>
+            <td>
+Invoices numbers must be used in the reference if paying by EFT, or sent with any cheques.
+            
+            </td>
+        </tr>
+        <tr>
+            <td>
+The debt arising under this invoice will not be not be extinguished unless paid to Suncorp Working Capital Solutions. Thank you for your order and supporting craft beer.            
+            </td>
+        </tr>
+      </table>
+      
     </div>
             </t>
         </template>
+        
+      
     </data>
 </openerp>
